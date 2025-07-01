@@ -1,39 +1,87 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" >
 <head>
-  <meta charset="UTF-8">
-  <title>TagUp</title>
+  <meta charset="UTF-8" />
+  <title>TagUp — Stay Motivated</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
   <style>
+    * {
+      box-sizing: border-box;
+    }
     body {
-      font-family: 'Segoe UI', sans-serif;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #005AA7 0%, #FFFDE4 100%);
+      margin: 0;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      padding: 20px;
+      color: #003459;
       text-align: center;
-      min-height: 100vh;
-      margin: 0;
-      background: linear-gradient(to right, #005aa7, #fffde4);
-      color: #333;
-    }
-    h1 {
-      font-size: 2.5rem;
-    }
-    p {
-      font-size: 1.2rem;
-      max-width: 600px;
-      padding: 0 20px;
     }
     .logo {
-      font-size: 4rem;
-      margin-bottom: 10px;
+      font-size: 5rem;
+      margin-bottom: 20px;
+      user-select: none;
+    }
+    h1 {
+      font-weight: 600;
+      font-size: 3rem;
+      margin-bottom: 15px;
+      letter-spacing: 1px;
+    }
+    p {
+      max-width: 450px;
+      font-weight: 400;
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+      line-height: 1.5;
+      color: #0a2240dd;
+    }
+    .cta-button {
+      background-color: #0073e6;
+      color: white;
+      padding: 15px 40px;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 35px;
+      cursor: pointer;
+      box-shadow: 0 8px 15px rgba(0,115,230,0.4);
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .cta-button:hover {
+      background-color: #005bb5;
+      box-shadow: 0 12px 20px rgba(0,91,181,0.6);
+    }
+    footer {
+      margin-top: 50px;
+      font-size: 0.85rem;
+      color: #003459bb;
+      user-select: none;
+    }
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 2.2rem;
+      }
+      p {
+        font-size: 1rem;
+      }
+      .cta-button {
+        padding: 12px 30px;
+        font-size: 1rem;
+      }
     }
   </style>
 </head>
 <body>
   <div class="logo">🏅</div>
   <h1>Welcome to TagUp</h1>
-  <p>Tap your TagUp wristband on your phone to unlock a motivational quote and track your daily goals.</p>
-  <p>Stay focused. Stay strong. Tag in. 💪</p>
+  <p>Tap your TagUp wristband on your phone to unlock daily motivational quotes and track your personal goals.</p>
+  <a href="/tap/0001" class="cta-button" aria-label="Go to your TagUp quote and goals page">Get Started</a>
+  <footer>© 2025 TagUp. Made with 💪 for athletes.</footer>
 </body>
 </html>
