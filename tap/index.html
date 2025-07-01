@@ -47,15 +47,25 @@
       color: white;
       border-radius: 4px;
       cursor: pointer;
+      margin: 5px;
     }
-    button:hover {
+    button:hover:not(:disabled) {
       background-color: #004080;
     }
+    button:disabled {
+      background-color: #ccc;
+      cursor: default;
+    }
     #status {
-      margin-top: 20px;
+      margin-top: 10px;
       font-size: 1.1rem;
       color: green;
       min-height: 1.5em;
+    }
+    #time-left {
+      margin-top: 10px;
+      font-size: 0.9rem;
+      color: #555;
     }
   </style>
 </head>
@@ -68,7 +78,14 @@
     <br />
     <button id="save-goal">Save Goal</button>
 
+    <div>
+      <button id="mark-done" disabled>Mark Done ✅</button>
+      <button id="mark-notdone" disabled>Mark Not Done ❌</button>
+    </div>
+
     <div id="status"></div>
+    <div id="time-left"></div>
   </div>
 </body>
 </html>
+
