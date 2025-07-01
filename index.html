@@ -1,87 +1,77 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>TagUp — Stay Motivated</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Black Swan Athletics</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&display=swap" rel="stylesheet" />
   <style>
     * {
       box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
     body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #005AA7 0%, #FFFDE4 100%);
-      margin: 0;
-      min-height: 100vh;
+      font-family: 'Montserrat', sans-serif;
+      background-color: #121212;
+      color: #ffffff;
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
-      padding: 20px;
-      color: #003459;
+      justify-content: center;
+      min-height: 100vh;
       text-align: center;
+      padding: 20px;
     }
     .logo {
-      font-size: 5rem;
-      margin-bottom: 20px;
-      user-select: none;
+      width: 120px;
+      margin-bottom: 25px;
     }
     h1 {
-      font-weight: 600;
       font-size: 3rem;
+      font-weight: 800;
+      color: #ffffff;
       margin-bottom: 15px;
-      letter-spacing: 1px;
     }
     p {
-      max-width: 450px;
-      font-weight: 400;
       font-size: 1.2rem;
+      color: #cfcfcf;
+      max-width: 600px;
       margin-bottom: 30px;
-      line-height: 1.5;
-      color: #0a2240dd;
     }
     .cta-button {
-      background-color: #0073e6;
+      background-color: #8e44ad;
       color: white;
-      padding: 15px 40px;
-      font-size: 1.2rem;
+      padding: 14px 36px;
+      font-size: 1.1rem;
+      font-weight: 600;
       border: none;
-      border-radius: 35px;
+      border-radius: 40px;
       cursor: pointer;
-      box-shadow: 0 8px 15px rgba(0,115,230,0.4);
-      transition: all 0.3s ease;
       text-decoration: none;
-      display: inline-block;
+      box-shadow: 0 8px 20px rgba(142, 68, 173, 0.3);
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
     }
     .cta-button:hover {
-      background-color: #005bb5;
-      box-shadow: 0 12px 20px rgba(0,91,181,0.6);
+      background-color: #732d91;
+      box-shadow: 0 12px 24px rgba(115, 45, 145, 0.4);
     }
     footer {
-      margin-top: 50px;
+      margin-top: 60px;
       font-size: 0.85rem;
-      color: #003459bb;
-      user-select: none;
-    }
-    @media (max-width: 480px) {
-      h1 {
-        font-size: 2.2rem;
-      }
-      p {
-        font-size: 1rem;
-      }
-      .cta-button {
-        padding: 12px 30px;
-        font-size: 1rem;
-      }
+      color: #888;
     }
   </style>
 </head>
 <body>
-  <div class="logo">🏅</div>
-  <h1>Welcome to TagUp</h1>
-  <p>Tap your TagUp wristband on your phone to unlock daily motivational quotes and track your personal goals.</p>
-  <a href="/tap/0001" class="cta-button" aria-label="Go to your TagUp quote and goals page">Get Started</a>
-  <footer>© 2025 TagUp. Made with 💪 for athletes.</footer>
+  <!-- Replace this with your actual logo file path -->
+  <img src="assets/logo-white.png" alt="Black Swan Athletics logo" class="logo" />
+  <h1>Black Swan Athletics</h1>
+  <p>Unlock discipline. Tap in daily. Elite athletes are built by mindset, not chance.</p>
+  <a href="/tap/0001" class="cta-button">Enter</a>
+  <footer>
+    &copy; 2025 Black Swan Athletics. All rights reserved.
+  </footer>
 </body>
 </html>
+
