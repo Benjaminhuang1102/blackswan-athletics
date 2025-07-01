@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>TagUp Quote</title>
+  <meta charset="UTF-8" />
+  <title>TagUp Quote & Goals</title>
   <script defer src="script.js"></script>
   <style>
     body {
@@ -10,19 +10,65 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      height: 100vh;
+      justify-content: flex-start;
+      min-height: 100vh;
       margin: 0;
+      padding: 20px;
       background-color: #f2f2f2;
+      color: #222;
     }
     h1 {
       max-width: 600px;
-      padding: 20px;
       text-align: center;
+      margin-bottom: 40px;
+    }
+    #goal-section {
+      background: white;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+    }
+    input[type="text"] {
+      padding: 10px;
+      width: 80%;
+      font-size: 1rem;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 1rem;
+      background-color: #005aa7;
+      border: none;
+      color: white;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #004080;
+    }
+    #status {
+      margin-top: 20px;
+      font-size: 1.1rem;
+      color: green;
+      min-height: 1.5em;
     }
   </style>
 </head>
 <body>
   <h1 id="quote">Loading...</h1>
+
+  <div id="goal-section">
+    <h2>Set Your Daily Goal</h2>
+    <input type="text" id="goal-input" placeholder="Enter your goal for today" />
+    <br />
+    <button id="save-goal">Save Goal</button>
+
+    <div id="status"></div>
+  </div>
 </body>
 </html>
