@@ -17,12 +17,19 @@ function getTodayKey() {
   return today.toISOString().split('T')[0];
 }
 
+function getYesterdayKey() {
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+  return yesterday.toISOString().split('T')[0];
+}
+
 const goalInput = document.getElementById('goal-input');
 const saveBtn = document.getElementById('save-goal');
 const statusDiv = document.getElementById('status');
 const timeLeftDiv = document.getElementById('time-left');
 const doneBtn = document.getElementById('mark-done');
 const notDoneBtn = document.getElementById('mark-notdone');
+const streakDiv = document.getElementById('streak');
 
 const todayKey = getTodayKey();
 const goalStorageKey = `tagup-goal-${todayKey}`;
@@ -42,6 +49,7 @@ function loadGoalAndStatus() {
 
   if (savedStatus) {
     statusDiv.textContent = `Goal status: ${savedStatus === 'done' ? '✅ Done' : '❌ Not Done'}`;
+    statusDiv.style.color = savedStatus === 'done' ? 'green' : 'red';
   }
 }
 
@@ -60,6 +68,7 @@ saveBtn.addEventListener('click', () => {
   saveBtn.disabled = true;
   doneBtn.disabled = false;
   notDoneBtn.disabled = false;
+  updateButtons();
 });
 
 doneBtn.addEventListener('click', () => {
@@ -68,6 +77,10 @@ doneBtn.addEventListener('click', () => {
   statusDiv.textContent = "Goal status: ✅ Done. Great job!";
   doneBtn.disabled = true;
   notDoneBtn.disabled = false;
+
+  updateStreakOnDone();
+  localStorage.setItem('tagup-streak-updated-' + todayKey, 'true');
+  updateButtons();
 });
 
 notDoneBtn.addEventListener('click', () => {
@@ -76,6 +89,7 @@ notDoneBtn.addEventListener('click', () => {
   statusDiv.textContent = "Goal status: ❌ Not Done. Keep pushing!";
   notDoneBtn.disabled = true;
   doneBtn.disabled = false;
+  updateButtons();
 });
 
 // Disable buttons properly based on status
@@ -102,6 +116,52 @@ function updateButtons() {
 
 updateButtons();
 
+// -- Streak Tracking --
+
+function loadStreak() {
+  return parseInt(localStorage.getItem('tagup-streak')) || 0;
+}
+
+function saveStreak(streak) {
+  localStorage.setItem('tagup-streak', streak);
+}
+
+function updateStreakDisplay(streak) {
+  if (streak > 0) {
+    streakDiv.textContent = `🔥 Current Streak: ${streak} day${streak === 1 ? '' : 's'} 🔥`;
+  } else {
+    streakDiv.textContent = `No streak yet. Start crushing those goals!`;
+  }
+}
+
+function updateStreakOnDone() {
+  const yesterdayKey = getYesterdayKey();
+  const yesterdayStatus = localStorage.getItem(`tagup-goal-status-${yesterdayKey}`);
+  let streak = loadStreak();
+
+  if (yesterdayStatus === 'done') {
+    streak += 1;
+  } else {
+    streak = 1;
+  }
+  saveStreak(streak);
+  updateStreakDisplay(streak);
+}
+
+function initStreak() {
+  const todayStatus = localStorage.getItem(statusStorageKey);
+  const streak = loadStreak();
+
+  updateStreakDisplay(streak);
+
+  if (todayStatus === 'done' && !localStorage.getItem('tagup-streak-updated-' + todayKey)) {
+    updateStreakOnDone();
+    localStorage.setItem('tagup-streak-updated-' + todayKey, 'true');
+  }
+}
+
+initStreak();
+
 // -- Time Left in Day --
 
 function updateTimeLeft() {
@@ -118,9 +178,9 @@ function updateTimeLeft() {
 
   timeLeftDiv.textContent = `Time left today: ${hours}h ${minutes}m ${seconds}s`;
 
-  // Update every second
   setTimeout(updateTimeLeft, 1000);
 }
 
 updateTimeLeft();
+
 
