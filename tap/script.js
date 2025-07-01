@@ -12,7 +12,6 @@ document.getElementById("quote").innerText = quote;
 
 // -- Goal Tracking Logic --
 
-// Helper to get today's date string like '2025-07-01'
 function getTodayKey() {
   const today = new Date();
   return today.toISOString().split('T')[0];
@@ -21,30 +20,107 @@ function getTodayKey() {
 const goalInput = document.getElementById('goal-input');
 const saveBtn = document.getElementById('save-goal');
 const statusDiv = document.getElementById('status');
+const timeLeftDiv = document.getElementById('time-left');
+const doneBtn = document.getElementById('mark-done');
+const notDoneBtn = document.getElementById('mark-notdone');
 
-const storageKey = `tagup-goal-${getTodayKey()}`;
+const todayKey = getTodayKey();
+const goalStorageKey = `tagup-goal-${todayKey}`;
+const statusStorageKey = `tagup-goal-status-${todayKey}`;
 
-// Load saved goal if any
-function loadGoal() {
-  const savedGoal = localStorage.getItem(storageKey);
+// Load saved goal and status
+function loadGoalAndStatus() {
+  const savedGoal = localStorage.getItem(goalStorageKey);
+  const savedStatus = localStorage.getItem(statusStorageKey);
+
   if (savedGoal) {
     goalInput.value = savedGoal;
-    statusDiv.textContent = "You’ve already set a goal for today.";
     saveBtn.disabled = true;
+    doneBtn.disabled = false;
+    notDoneBtn.disabled = false;
+  }
+
+  if (savedStatus) {
+    statusDiv.textContent = `Goal status: ${savedStatus === 'done' ? '✅ Done' : '❌ Not Done'}`;
   }
 }
 
-loadGoal();
+loadGoalAndStatus();
 
 saveBtn.addEventListener('click', () => {
   const goal = goalInput.value.trim();
   if (!goal) {
-    statusDiv.textContent = "Please enter a goal before saving.";
     statusDiv.style.color = "red";
+    statusDiv.textContent = "Please enter a goal before saving.";
     return;
   }
-  localStorage.setItem(storageKey, goal);
-  statusDiv.textContent = "Goal saved! Crush it today! 💪";
+  localStorage.setItem(goalStorageKey, goal);
   statusDiv.style.color = "green";
+  statusDiv.textContent = "Goal saved! Crush it today! 💪";
   saveBtn.disabled = true;
+  doneBtn.disabled = false;
+  notDoneBtn.disabled = false;
 });
+
+doneBtn.addEventListener('click', () => {
+  localStorage.setItem(statusStorageKey, 'done');
+  statusDiv.style.color = "green";
+  statusDiv.textContent = "Goal status: ✅ Done. Great job!";
+  doneBtn.disabled = true;
+  notDoneBtn.disabled = false;
+});
+
+notDoneBtn.addEventListener('click', () => {
+  localStorage.setItem(statusStorageKey, 'notdone');
+  statusDiv.style.color = "red";
+  statusDiv.textContent = "Goal status: ❌ Not Done. Keep pushing!";
+  notDoneBtn.disabled = true;
+  doneBtn.disabled = false;
+});
+
+// Disable buttons properly based on status
+function updateButtons() {
+  const status = localStorage.getItem(statusStorageKey);
+  if (!localStorage.getItem(goalStorageKey)) {
+    doneBtn.disabled = true;
+    notDoneBtn.disabled = true;
+    saveBtn.disabled = false;
+  } else if (status === 'done') {
+    doneBtn.disabled = true;
+    notDoneBtn.disabled = false;
+    saveBtn.disabled = true;
+  } else if (status === 'notdone') {
+    notDoneBtn.disabled = true;
+    doneBtn.disabled = false;
+    saveBtn.disabled = true;
+  } else {
+    doneBtn.disabled = false;
+    notDoneBtn.disabled = false;
+    saveBtn.disabled = true;
+  }
+}
+
+updateButtons();
+
+// -- Time Left in Day --
+
+function updateTimeLeft() {
+  const now = new Date();
+  const endOfDay = new Date();
+  endOfDay.setHours(23,59,59,999);
+
+  let diffMs = endOfDay - now;
+  if (diffMs < 0) diffMs = 0;
+
+  const hours = Math.floor(diffMs / (1000 * 60 * 60));
+  const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((diffMs % (1000 * 60)) / 1000);
+
+  timeLeftDiv.textContent = `Time left today: ${hours}h ${minutes}m ${seconds}s`;
+
+  // Update every second
+  setTimeout(updateTimeLeft, 1000);
+}
+
+updateTimeLeft();
+
