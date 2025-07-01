@@ -3,142 +3,82 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Black Swan | Daily Goal</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&display=swap" rel="stylesheet">
+  <title>Black Swan Athletics</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&display=swap" rel="stylesheet" />
   <style>
-    body {
+    * {
+      box-sizing: border-box;
       margin: 0;
+      padding: 0;
+    }
+    body {
       font-family: 'Montserrat', sans-serif;
-      background: url('https://images.unsplash.com/photo-1600488995262-02e5ec8b3c6b') no-repeat center center fixed;
-      background-size: cover;
-      position: relative;
-      min-height: 100vh;
+      background-color: #000000;
+      color: #ffffff;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      color: #fff;
-    }
-    body::before {
-      content: "";
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background-color: rgba(0, 0, 0, 0.65);
-      z-index: 0;
-    }
-    .container {
-      position: relative;
-      z-index: 1;
-      max-width: 500px;
-      padding: 2rem;
-      background-color: rgba(18, 18, 18, 0.85);
-      border-radius: 15px;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+      min-height: 100vh;
       text-align: center;
+      padding: 20px;
+    }
+    .logo {
+      width: 160px;
+      margin-bottom: 20px;
     }
     h1 {
-      font-size: 2rem;
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #ffffff;
       margin-bottom: 10px;
     }
-    .streak {
-      font-size: 1rem;
-      margin-bottom: 20px;
-      color: #ffae00;
+    .tagline {
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: #4169e1;
+      margin-bottom: 30px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
-    input[type="text"] {
-      width: 100%;
-      padding: 12px;
-      font-size: 1rem;
-      border: none;
-      border-radius: 8px;
-      margin-bottom: 10px;
-    }
-    button {
-      width: 100%;
-      padding: 12px;
-      font-size: 1rem;
-      background-color: #8e44ad;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      margin-top: 10px;
-    }
-    button.done {
-      background-color: #00c853;
-    }
-    .goal-display {
-      margin-top: 20px;
+    p {
       font-size: 1.2rem;
+      color: #dddddd;
+      max-width: 600px;
+      margin-bottom: 30px;
     }
-    .quote {
-      font-size: 0.9rem;
-      margin-top: 10px;
-      font-style: italic;
-      color: #bbb;
+    .cta-button {
+      background-color: #4169e1;
+      color: white;
+      padding: 14px 36px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 40px;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 8px 20px rgba(65, 105, 225, 0.3);
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .cta-button:hover {
+      background-color: #2f54b4;
+      box-shadow: 0 12px 24px rgba(47, 84, 180, 0.4);
+    }
+    footer {
+      margin-top: 60px;
+      font-size: 0.85rem;
+      color: #888;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Today's Goal</h1>
-    <div class="streak" id="streakDisplay">🔥 Streak: 0 days</div>
-    <input type="text" id="goalInput" placeholder="Set your daily goal..." />
-    <button onclick="saveGoal()">Set Goal</button>
-    <div class="goal-display" id="goalDisplay"></div>
-    <button class="done" onclick="markDone()">Mark as Done ✅</button>
-    <div class="quote" id="quote">"Train Different. Win Different."</div>
-  </div>
-
-  <script>
-    const goalInput = document.getElementById('goalInput');
-    const goalDisplay = document.getElementById('goalDisplay');
-    const streakDisplay = document.getElementById('streakDisplay');
-    const today = new Date().toISOString().slice(0, 10);
-
-    function saveGoal() {
-      const goal = goalInput.value.trim();
-      if (goal) {
-        localStorage.setItem('dailyGoal', goal);
-        localStorage.setItem('goalDate', today);
-        localStorage.setItem('goalDone', 'false');
-        displayGoal();
-      }
-    }
-
-    function markDone() {
-      if (localStorage.getItem('goalDate') === today) {
-        if (localStorage.getItem('goalDone') !== 'true') {
-          localStorage.setItem('goalDone', 'true');
-          incrementStreak();
-          alert('Goal marked as done! Great work.');
-        }
-      }
-    }
-
-    function incrementStreak() {
-      let streak = parseInt(localStorage.getItem('streak') || '0');
-      streak++;
-      localStorage.setItem('streak', streak);
-      streakDisplay.textContent = `🔥 Streak: ${streak} days`;
-    }
-
-    function displayGoal() {
-      const savedGoal = localStorage.getItem('dailyGoal');
-      const savedDate = localStorage.getItem('goalDate');
-      const savedDone = localStorage.getItem('goalDone');
-      const streak = localStorage.getItem('streak') || 0;
-      if (savedDate === today && savedGoal) {
-        goalDisplay.textContent = `"${savedGoal}"`;
-      } else {
-        goalDisplay.textContent = "No goal set for today.";
-      }
-      streakDisplay.textContent = `🔥 Streak: ${streak} days`;
-    }
-
-    displayGoal();
-  </script>
+  <img src="assets/logo-white.png" alt="Black Swan Athletics logo" class="logo" />
+  <h1>Black Swan Athletics</h1>
+  <div class="tagline">Train Different</div>
+  <p>Unlock discipline. Tap in daily. Elite athletes are built by mindset, not chance.</p>
+  <a href="/tap/0001" class="cta-button">Enter</a>
+  <footer>
+    &copy; 2025 Black Swan Athletics. All rights reserved.
+  </footer>
 </body>
 </html>
-
