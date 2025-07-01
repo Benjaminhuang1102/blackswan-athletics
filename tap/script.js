@@ -1,186 +1,73 @@
-const quotes = {
-  "0001": "“You miss 100% of the shots you don’t take.” – Wayne Gretzky",
-  "0002": "“Champions keep playing until they get it right.” – Billie Jean King",
-  "0003": "“Hard work beats talent when talent doesn’t work hard.” – Tim Notke",
-};
+<script>
+  const quotes = [
+    "“You miss 100% of the shots you don’t take.” – Wayne Gretzky",
+    "“Champions keep playing until they get it right.” – Billie Jean King",
+    "“Hard work beats talent when talent doesn’t work hard.” – Tim Notke",
+    "“It’s not whether you get knocked down; it’s whether you get up.” – Vince Lombardi",
+    "“The difference between the impossible and the possible lies in a person’s determination.” – Tommy Lasorda",
+    "“Success isn’t owned. It’s leased. And rent is due every day.” – J.J. Watt",
+    "“Do something today that your future self will thank you for.” – Sean Patrick Flanery"
+  ];
 
-const parts = window.location.pathname.split("/");
-const id = parts[parts.length - 1];
-
-const quote = quotes[id] || "Stay strong. Stay focused. You’ve got this 💪";
-document.getElementById("quote").innerText = quote;
-
-// -- Goal Tracking Logic --
-
-function getTodayKey() {
-  const today = new Date();
-  return today.toISOString().split('T')[0];
-}
-
-function getYesterdayKey() {
-  const yesterday = new Date();
-  yesterday.setDate(yesterday.getDate() - 1);
-  return yesterday.toISOString().split('T')[0];
-}
-
-const goalInput = document.getElementById('goal-input');
-const saveBtn = document.getElementById('save-goal');
-const statusDiv = document.getElementById('status');
-const timeLeftDiv = document.getElementById('time-left');
-const doneBtn = document.getElementById('mark-done');
-const notDoneBtn = document.getElementById('mark-notdone');
-const streakDiv = document.getElementById('streak');
-
-const todayKey = getTodayKey();
-const goalStorageKey = `tagup-goal-${todayKey}`;
-const statusStorageKey = `tagup-goal-status-${todayKey}`;
-
-// Load saved goal and status
-function loadGoalAndStatus() {
-  const savedGoal = localStorage.getItem(goalStorageKey);
-  const savedStatus = localStorage.getItem(statusStorageKey);
-
-  if (savedGoal) {
-    goalInput.value = savedGoal;
-    saveBtn.disabled = true;
-    doneBtn.disabled = false;
-    notDoneBtn.disabled = false;
+  function getQuoteOfTheDay() {
+    const today = new Date();
+    const start = new Date(today.getFullYear(), 0, 0);
+    const diff = today - start;
+    const oneDay = 1000 * 60 * 60 * 24;
+    const dayOfYear = Math.floor(diff / oneDay);
+    const index = dayOfYear % quotes.length;
+    return quotes[index];
   }
 
-  if (savedStatus) {
-    statusDiv.textContent = `Goal status: ${savedStatus === 'done' ? '✅ Done' : '❌ Not Done'}`;
-    statusDiv.style.color = savedStatus === 'done' ? 'green' : 'red';
+  // Existing DOM elements
+  const goalInput = document.getElementById('goalInput');
+  const goalDisplay = document.getElementById('goalDisplay');
+  const streakDisplay = document.getElementById('streakDisplay');
+  const quoteDiv = document.getElementById('quote');
+  const today = new Date().toISOString().slice(0, 10);
+
+  function saveGoal() {
+    const goal = goalInput.value.trim();
+    if (goal) {
+      localStorage.setItem('dailyGoal', goal);
+      localStorage.setItem('goalDate', today);
+      localStorage.setItem('goalDone', 'false');
+      displayGoal();
+    }
   }
-}
 
-loadGoalAndStatus();
-
-saveBtn.addEventListener('click', () => {
-  const goal = goalInput.value.trim();
-  if (!goal) {
-    statusDiv.style.color = "red";
-    statusDiv.textContent = "Please enter a goal before saving.";
-    return;
+  function markDone() {
+    if (localStorage.getItem('goalDate') === today) {
+      if (localStorage.getItem('goalDone') !== 'true') {
+        localStorage.setItem('goalDone', 'true');
+        incrementStreak();
+        alert('Goal marked as done! Great work.');
+      }
+    }
   }
-  localStorage.setItem(goalStorageKey, goal);
-  statusDiv.style.color = "green";
-  statusDiv.textContent = "Goal saved! Crush it today! 💪";
-  saveBtn.disabled = true;
-  doneBtn.disabled = false;
-  notDoneBtn.disabled = false;
-  updateButtons();
-});
 
-doneBtn.addEventListener('click', () => {
-  localStorage.setItem(statusStorageKey, 'done');
-  statusDiv.style.color = "green";
-  statusDiv.textContent = "Goal status: ✅ Done. Great job!";
-  doneBtn.disabled = true;
-  notDoneBtn.disabled = false;
-
-  updateStreakOnDone();
-  localStorage.setItem('tagup-streak-updated-' + todayKey, 'true');
-  updateButtons();
-});
-
-notDoneBtn.addEventListener('click', () => {
-  localStorage.setItem(statusStorageKey, 'notdone');
-  statusDiv.style.color = "red";
-  statusDiv.textContent = "Goal status: ❌ Not Done. Keep pushing!";
-  notDoneBtn.disabled = true;
-  doneBtn.disabled = false;
-  updateButtons();
-});
-
-// Disable buttons properly based on status
-function updateButtons() {
-  const status = localStorage.getItem(statusStorageKey);
-  if (!localStorage.getItem(goalStorageKey)) {
-    doneBtn.disabled = true;
-    notDoneBtn.disabled = true;
-    saveBtn.disabled = false;
-  } else if (status === 'done') {
-    doneBtn.disabled = true;
-    notDoneBtn.disabled = false;
-    saveBtn.disabled = true;
-  } else if (status === 'notdone') {
-    notDoneBtn.disabled = true;
-    doneBtn.disabled = false;
-    saveBtn.disabled = true;
-  } else {
-    doneBtn.disabled = false;
-    notDoneBtn.disabled = false;
-    saveBtn.disabled = true;
+  function incrementStreak() {
+    let streak = parseInt(localStorage.getItem('streak') || '0');
+    streak++;
+    localStorage.setItem('streak', streak);
+    streakDisplay.textContent = `🔥 Streak: ${streak} days`;
   }
-}
 
-updateButtons();
-
-// -- Streak Tracking --
-
-function loadStreak() {
-  return parseInt(localStorage.getItem('tagup-streak')) || 0;
-}
-
-function saveStreak(streak) {
-  localStorage.setItem('tagup-streak', streak);
-}
-
-function updateStreakDisplay(streak) {
-  if (streak > 0) {
-    streakDiv.textContent = `🔥 Current Streak: ${streak} day${streak === 1 ? '' : 's'} 🔥`;
-  } else {
-    streakDiv.textContent = `No streak yet. Start crushing those goals!`;
+  function displayGoal() {
+    const savedGoal = localStorage.getItem('dailyGoal');
+    const savedDate = localStorage.getItem('goalDate');
+    const savedDone = localStorage.getItem('goalDone');
+    const streak = localStorage.getItem('streak') || 0;
+    if (savedDate === today && savedGoal) {
+      goalDisplay.textContent = `"${savedGoal}"`;
+    } else {
+      goalDisplay.textContent = "No goal set for today.";
+    }
+    streakDisplay.textContent = `🔥 Streak: ${streak} days`;
   }
-}
 
-function updateStreakOnDone() {
-  const yesterdayKey = getYesterdayKey();
-  const yesterdayStatus = localStorage.getItem(`tagup-goal-status-${yesterdayKey}`);
-  let streak = loadStreak();
+  // Set the daily quote on page load
+  quoteDiv.textContent = getQuoteOfTheDay();
 
-  if (yesterdayStatus === 'done') {
-    streak += 1;
-  } else {
-    streak = 1;
-  }
-  saveStreak(streak);
-  updateStreakDisplay(streak);
-}
-
-function initStreak() {
-  const todayStatus = localStorage.getItem(statusStorageKey);
-  const streak = loadStreak();
-
-  updateStreakDisplay(streak);
-
-  if (todayStatus === 'done' && !localStorage.getItem('tagup-streak-updated-' + todayKey)) {
-    updateStreakOnDone();
-    localStorage.setItem('tagup-streak-updated-' + todayKey, 'true');
-  }
-}
-
-initStreak();
-
-// -- Time Left in Day --
-
-function updateTimeLeft() {
-  const now = new Date();
-  const endOfDay = new Date();
-  endOfDay.setHours(23,59,59,999);
-
-  let diffMs = endOfDay - now;
-  if (diffMs < 0) diffMs = 0;
-
-  const hours = Math.floor(diffMs / (1000 * 60 * 60));
-  const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
-  const seconds = Math.floor((diffMs % (1000 * 60)) / 1000);
-
-  timeLeftDiv.textContent = `Time left today: ${hours}h ${minutes}m ${seconds}s`;
-
-  setTimeout(updateTimeLeft, 1000);
-}
-
-updateTimeLeft();
-
-
+  displayGoal();
+</script>
