@@ -92,7 +92,7 @@
   </div>
 
   <script>
-    document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", () => {
       const quotes = [
         "“You miss 100% of the shots you don’t take.” – Wayne Gretzky",
         "“Champions keep playing until they get it right.” – Billie Jean King",
@@ -103,20 +103,21 @@
         "“Do something today that your future self will thank you for.” – Sean Patrick Flanery"
       ];
 
+      function getDayOfYear(date) {
+        const start = new Date(date.getFullYear(), 0, 0);
+        const diff = date - start + ((start.getTimezoneOffset() - date.getTimezoneOffset()) * 60 * 1000);
+        return Math.floor(diff / (1000 * 60 * 60 * 24));
+      }
+
       function getQuoteOfTheDay() {
-        const today = new Date();
-        const dayOfYear = Math.floor(
-          (Date.UTC(today.getFullYear(), today.getMonth(), today.getDate()) -
-          Date.UTC(today.getFullYear(), 0, 0)) / 86400000
-        );
+        const dayOfYear = getDayOfYear(new Date());
         const index = dayOfYear % quotes.length;
         return quotes[index];
       }
 
-      // Show daily quote
       document.getElementById("quote").textContent = getQuoteOfTheDay();
 
-      // Daily goal logic
+      // Goal functionality
       const goalInput = document.getElementById('goalInput');
       const goalDisplay = document.getElementById('goalDisplay');
       const streakDisplay = document.getElementById('streakDisplay');
@@ -160,4 +161,3 @@
   </script>
 </body>
 </html>
-
