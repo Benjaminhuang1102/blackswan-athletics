@@ -1,73 +1,52 @@
 <script>
   const quotes = [
-    "“You miss 100% of the shots you don’t take.” – Wayne Gretzky",
-    "“Champions keep playing until they get it right.” – Billie Jean King",
-    "“Hard work beats talent when talent doesn’t work hard.” – Tim Notke",
-    "“It’s not whether you get knocked down; it’s whether you get up.” – Vince Lombardi",
-    "“The difference between the impossible and the possible lies in a person’s determination.” – Tommy Lasorda",
-    "“Success isn’t owned. It’s leased. And rent is due every day.” – J.J. Watt",
-    "“Do something today that your future self will thank you for.” – Sean Patrick Flanery"
+    "You miss 100% of the shots you don’t take.",
+    "Champions keep playing until they get it right.",
+    "Hard work beats talent when talent doesn’t work hard.",
+    "It’s not whether you get knocked down; it’s whether you get up.",
+    "The difference between the impossible and the possible lies in a person’s determination.",
+    "Success isn’t owned. It’s leased. And rent is due every day.",
+    "Do something today that your future self will thank you for."
+  ];
+  const authors = [
+    "Wayne Gretzky",
+    "Billie Jean King",
+    "Tim Notke",
+    "Vince Lombardi",
+    "Tommy Lasorda",
+    "J.J. Watt",
+    "Sean Patrick Flanery"
   ];
 
-  function getQuoteOfTheDay() {
-    const today = new Date();
-    const start = new Date(today.getFullYear(), 0, 0);
-    const diff = today - start;
-    const oneDay = 1000 * 60 * 60 * 24;
-    const dayOfYear = Math.floor(diff / oneDay);
-    const index = dayOfYear % quotes.length;
-    return quotes[index];
+  const backgroundImages = [
+    "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=720&q=80",
+    "https://images.unsplash.com/photo-1605296867304-46d5465a13f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=720&q=80",
+    "https://images.unsplash.com/photo-1614284477357-7b7a0e5479f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=720&q=80",
+    "https://images.unsplash.com/photo-1546484959-f676d97f5d5b?ixlib=rb-4.0.3&auto=format&fit=crop&w=720&q=80",
+    "https://images.unsplash.com/photo-1603297621325-14c2ba2f3d07?ixlib=rb-4.0.3&auto=format&fit=crop&w=720&q=80"
+  ];
+
+  function getDayOfYear() {
+    const now = new Date();
+    const start = new Date(now.getFullYear(), 0, 0);
+    const diff = now - start;
+    return Math.floor(diff / (1000 * 60 * 60 * 24));
   }
 
-  // Existing DOM elements
-  const goalInput = document.getElementById('goalInput');
-  const goalDisplay = document.getElementById('goalDisplay');
-  const streakDisplay = document.getElementById('streakDisplay');
-  const quoteDiv = document.getElementById('quote');
-  const today = new Date().toISOString().slice(0, 10);
+  function displayQuoteAndBackground() {
+    const dayIndex = getDayOfYear() % quotes.length;
 
-  function saveGoal() {
-    const goal = goalInput.value.trim();
-    if (goal) {
-      localStorage.setItem('dailyGoal', goal);
-      localStorage.setItem('goalDate', today);
-      localStorage.setItem('goalDone', 'false');
-      displayGoal();
-    }
+    // Set background image
+    const hero = document.getElementById("hero");
+    hero.style.backgroundImage = `url('${backgroundImages[dayIndex % backgroundImages.length]}')`;
+
+    // Set quote text and author
+    document.getElementById("quoteText").textContent = `“${quotes[dayIndex]}”`;
+    document.getElementById("quoteAuthor").textContent = `– ${authors[dayIndex]}`;
   }
 
-  function markDone() {
-    if (localStorage.getItem('goalDate') === today) {
-      if (localStorage.getItem('goalDone') !== 'true') {
-        localStorage.setItem('goalDone', 'true');
-        incrementStreak();
-        alert('Goal marked as done! Great work.');
-      }
-    }
-  }
-
-  function incrementStreak() {
-    let streak = parseInt(localStorage.getItem('streak') || '0');
-    streak++;
-    localStorage.setItem('streak', streak);
-    streakDisplay.textContent = `🔥 Streak: ${streak} days`;
-  }
-
-  function displayGoal() {
-    const savedGoal = localStorage.getItem('dailyGoal');
-    const savedDate = localStorage.getItem('goalDate');
-    const savedDone = localStorage.getItem('goalDone');
-    const streak = localStorage.getItem('streak') || 0;
-    if (savedDate === today && savedGoal) {
-      goalDisplay.textContent = `"${savedGoal}"`;
-    } else {
-      goalDisplay.textContent = "No goal set for today.";
-    }
-    streakDisplay.textContent = `🔥 Streak: ${streak} days`;
-  }
-
-  // Set the daily quote on page load
-  quoteDiv.textContent = getQuoteOfTheDay();
-
-  displayGoal();
+  // Run after DOM loads
+  document.addEventListener("DOMContentLoaded", () => {
+    displayQuoteAndBackground();
+  });
 </script>
