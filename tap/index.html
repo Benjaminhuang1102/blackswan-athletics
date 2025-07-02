@@ -7,82 +7,107 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&display=swap" rel="stylesheet" />
   <style>
     * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+      margin: 0; padding: 0; box-sizing: border-box;
     }
     html, body {
       height: 100%;
-      background:
-        linear-gradient(to bottom, rgba(0,0,0,0.7) 30%, rgba(0,0,0,1) 80%),
-        url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
-      background-size: cover;
       font-family: 'Montserrat', sans-serif;
       color: #fff;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      padding: 20px 15px 40px;
+      overflow-x: hidden;
+      background: #000;
     }
-    .container {
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    /* Top quote section */
+    .quote-section {
+      position: relative;
+      height: 50vh;
       width: 100%;
       max-width: 480px;
+      margin: 0 auto;
+      background:
+        linear-gradient(to bottom, rgba(0,0,0,0.3) 30%, rgba(0,0,0,0.9) 90%),
+        url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1920&q=80') no-repeat center center;
+      background-size: cover;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 0 20px;
       text-align: center;
-      margin-top: 60px;
-      position: relative;
-      z-index: 1;
+      user-select: none;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.8);
     }
     #quoteText {
-      font-size: 1.8rem;
+      font-size: 2rem;
       font-style: italic;
-      line-height: 1.4;
+      line-height: 1.3;
+      text-shadow: 0 3px 10px rgba(0,0,0,0.8);
       margin-bottom: 8px;
-      text-shadow: 0 2px 8px rgba(0,0,0,0.7);
-    }
-    #quoteAuthor {
-      font-size: 1rem;
-      font-weight: 600;
-      color: #888;
-      margin-bottom: 40px;
       user-select: text;
     }
-    h1 {
-      font-size: 2.4rem;
-      color: #ffae00;
+    #quoteAuthor {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #aaa;
+      user-select: text;
+      max-width: 90%;
+      margin: 0 auto;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.7);
+    }
+
+    /* Goal input section */
+    .goal-section {
+      flex-grow: 1;
+      background: #000;
+      width: 100%;
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 30px 20px 50px;
+      box-sizing: border-box;
+      color: #eee;
+      user-select: none;
+    }
+    .goal-section h1 {
+      font-size: 2.2rem;
       margin-bottom: 18px;
-      text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+      color: #ffae00;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.8);
       user-select: none;
     }
     .streak {
-      font-size: 1.2rem;
-      margin-bottom: 22px;
+      font-size: 1.3rem;
+      margin-bottom: 25px;
       text-shadow: 0 1px 5px rgba(0,0,0,0.6);
-      user-select: none;
     }
     input[type="text"] {
       width: 100%;
-      padding: 14px 16px;
-      font-size: 1.1rem;
+      padding: 15px 16px;
+      font-size: 1.2rem;
       border: none;
-      border-radius: 12px;
-      margin-bottom: 15px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.3);
-      outline-offset: 2px;
+      border-radius: 14px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+      outline-offset: 3px;
+      color: #000;
     }
     button {
       width: 100%;
-      padding: 14px 0;
-      font-size: 1.1rem;
+      padding: 15px 0;
+      font-size: 1.15rem;
       border: none;
-      border-radius: 12px;
+      border-radius: 14px;
       background-color: #8e44ad;
       color: white;
       cursor: pointer;
       transition: background-color 0.3s ease;
-      margin-bottom: 15px;
-      box-shadow: 0 4px 15px rgba(142, 68, 173, 0.5);
+      margin-bottom: 18px;
+      box-shadow: 0 5px 18px rgba(142, 68, 173, 0.5);
       user-select: none;
     }
     button:hover,
@@ -92,8 +117,8 @@
     }
     button.done {
       background-color: #00c853;
-      box-shadow: 0 4px 15px rgba(0, 200, 83, 0.6);
-      margin-top: 10px;
+      box-shadow: 0 5px 18px rgba(0, 200, 83, 0.6);
+      margin-top: 5px;
     }
     button.done:hover,
     button.done:focus {
@@ -101,29 +126,32 @@
       outline: none;
     }
     .goal-display {
-      font-size: 1.3rem;
+      font-size: 1.4rem;
       margin-bottom: 10px;
-      min-height: 36px;
-      color: #f0f0f0;
-      text-shadow: 0 1px 5px rgba(0,0,0,0.5);
+      min-height: 38px;
+      color: #eee;
+      text-shadow: 0 2px 7px rgba(0,0,0,0.5);
       user-select: text;
+      min-height: 38px;
     }
   </style>
 </head>
 <body>
-  <div class="container">
+
+  <section class="quote-section">
     <div id="quoteText"></div>
     <div id="quoteAuthor"></div>
+  </section>
 
+  <section class="goal-section">
     <h1>Daily Goal</h1>
     <div class="streak" id="streakDisplay">🔥 Streak: 0 days</div>
     <input type="text" id="goalInput" placeholder="Set your daily goal..." autocomplete="off" />
     <button onclick="saveGoal()">Set Goal</button>
     <div class="goal-display" id="goalDisplay">No goal set for today.</div>
     <button class="done" onclick="markDone()">Mark as Done ✅</button>
-  </div>
+  </section>
 
-  <!-- Load quotes from external file -->
   <script src="quote.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", () => {
@@ -140,7 +168,7 @@
         const diff = todayDate - start;
         const oneDay = 1000 * 60 * 60 * 24;
         const dayOfYear = Math.floor(diff / oneDay);
-        const index = dayOfYear % quotes.length; // quotes from quote.js
+        const index = dayOfYear % quotes.length;
         return quotes[index];
       }
 
