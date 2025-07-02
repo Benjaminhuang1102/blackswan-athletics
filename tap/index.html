@@ -1,234 +1,203 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Black Swan | Daily Goal</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&display=swap" rel="stylesheet">
   <style>
     * {
-      margin: 0; padding: 0; box-sizing: border-box;
-    }
-    html, body {
-      height: 100%;
-      font-family: 'Montserrat', sans-serif;
-      color: #fff;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      overflow-x: hidden;
-      background: #000;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
     body {
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-    /* Top quote section */
-    .quote-section {
+      font-family: 'Montserrat', sans-serif;
+      color: #fff;
+      min-height: 200vh;
       position: relative;
-      height: 50vh;
-      width: 100%;
-      max-width: 480px;
-      margin: 0 auto;
-      background:
-        linear-gradient(to bottom, rgba(0,0,0,0.3) 30%, rgba(0,0,0,0.9) 90%),
-        url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1920&q=80') no-repeat center center;
-      background-size: cover;
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 40%, #000 90%), url('') center/cover no-repeat fixed;
+      transition: background-image 0.6s ease-in-out;
+    }
+    .hero {
+      height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      padding: 0 20px;
+      padding: 2rem;
       text-align: center;
-      user-select: none;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.8);
+      z-index: 1;
+      position: relative;
     }
-    #quoteText {
-      font-size: 2rem;
+    .quote-text {
+      font-size: 1.8rem;
       font-style: italic;
-      line-height: 1.3;
-      text-shadow: 0 3px 10px rgba(0,0,0,0.8);
-      margin-bottom: 8px;
-      user-select: text;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      max-width: 800px;
+      margin-bottom: 0.5rem;
     }
-    #quoteAuthor {
-      font-size: 1.1rem;
-      font-weight: 600;
+    .quote-author {
+      font-size: 1rem;
       color: #aaa;
-      user-select: text;
-      max-width: 90%;
-      margin: 0 auto;
-      text-shadow: 0 2px 8px rgba(0,0,0,0.7);
     }
-
-    /* Goal input section */
-    .goal-section {
-      flex-grow: 1;
-      background: #000;
-      width: 100%;
-      max-width: 480px;
-      margin: 0 auto;
-      padding: 30px 20px 50px;
-      box-sizing: border-box;
-      color: #eee;
-      user-select: none;
+    .content {
+      padding: 2rem;
+      background-color: #000;
     }
-    .goal-section h1 {
-      font-size: 2.2rem;
-      margin-bottom: 18px;
+    h1 {
+      font-size: 2rem;
       color: #ffae00;
-      text-shadow: 0 2px 8px rgba(0,0,0,0.8);
-      user-select: none;
+      margin-bottom: 10px;
     }
     .streak {
-      font-size: 1.3rem;
-      margin-bottom: 25px;
-      text-shadow: 0 1px 5px rgba(0,0,0,0.6);
+      font-size: 1.2rem;
+      margin-bottom: 15px;
+      color: #ffae00;
     }
     input[type="text"] {
       width: 100%;
-      padding: 15px 16px;
-      font-size: 1.2rem;
+      max-width: 400px;
+      padding: 14px;
+      font-size: 1rem;
       border: none;
-      border-radius: 14px;
-      margin-bottom: 20px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-      outline-offset: 3px;
-      color: #000;
+      border-radius: 10px;
+      margin-bottom: 15px;
     }
     button {
-      width: 100%;
-      padding: 15px 0;
-      font-size: 1.15rem;
-      border: none;
-      border-radius: 14px;
+      padding: 12px 24px;
+      font-size: 1rem;
       background-color: #8e44ad;
       color: white;
+      border: none;
+      border-radius: 10px;
       cursor: pointer;
-      transition: background-color 0.3s ease;
-      margin-bottom: 18px;
-      box-shadow: 0 5px 18px rgba(142, 68, 173, 0.5);
-      user-select: none;
+      transition: background 0.3s ease;
     }
-    button:hover,
-    button:focus {
+    button:hover {
       background-color: #732d91;
-      outline: none;
     }
-    button.done {
+    .done {
       background-color: #00c853;
-      box-shadow: 0 5px 18px rgba(0, 200, 83, 0.6);
-      margin-top: 5px;
-    }
-    button.done:hover,
-    button.done:focus {
-      background-color: #009e38;
-      outline: none;
     }
     .goal-display {
-      font-size: 1.4rem;
-      margin-bottom: 10px;
-      min-height: 38px;
-      color: #eee;
-      text-shadow: 0 2px 7px rgba(0,0,0,0.5);
-      user-select: text;
-      min-height: 38px;
+      font-size: 1.3rem;
+      margin-top: 15px;
+      color: #f0f0f0;
+    }
+    canvas.confetti {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 99;
     }
   </style>
 </head>
 <body>
+  <canvas class="confetti"></canvas>
+  <div class="hero">
+    <div class="quote-text" id="quoteText">Loading quote...</div>
+    <div class="quote-author" id="quoteAuthor"></div>
+  </div>
 
-  <section class="quote-section">
-    <div id="quoteText"></div>
-    <div id="quoteAuthor"></div>
-  </section>
-
-  <section class="goal-section">
+  <div class="content">
     <h1>Daily Goal</h1>
     <div class="streak" id="streakDisplay">🔥 Streak: 0 days</div>
-    <input type="text" id="goalInput" placeholder="Set your daily goal..." autocomplete="off" />
+    <input type="text" id="goalInput" placeholder="Set your daily goal..." />
     <button onclick="saveGoal()">Set Goal</button>
     <div class="goal-display" id="goalDisplay">No goal set for today.</div>
     <button class="done" onclick="markDone()">Mark as Done ✅</button>
-  </section>
+  </div>
 
   <script src="quotes.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const quoteDiv = document.getElementById('quoteText');
-      const authorDiv = document.getElementById('quoteAuthor');
-      const goalInput = document.getElementById('goalInput');
-      const goalDisplay = document.getElementById('goalDisplay');
-      const streakDisplay = document.getElementById('streakDisplay');
-      const today = new Date().toISOString().slice(0, 10);
+    const backgrounds = [
+      'https://images.unsplash.com/photo-1517836357463-d25dfeac3438',
+      'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b',
+      'https://images.unsplash.com/photo-1508672019048-805c876b67e2'
+    ];
 
-      function getQuoteOfTheDay() {
-        const todayDate = new Date();
-        const start = new Date(todayDate.getFullYear(), 0, 0);
-        const diff = todayDate - start;
-        const oneDay = 1000 * 60 * 60 * 24;
-        const dayOfYear = Math.floor(diff / oneDay);
-        const index = dayOfYear % quotes.length;
-        return quotes[index];
+    function getDayOfYear(date) {
+      const start = new Date(date.getFullYear(), 0, 0);
+      const diff = date - start + ((start.getTimezoneOffset() - date.getTimezoneOffset()) * 60 * 1000);
+      return Math.floor(diff / (1000 * 60 * 60 * 24));
+    }
+
+    function getQuoteOfTheDay() {
+      const day = getDayOfYear(new Date());
+      return quotes[day % quotes.length];
+    }
+
+    function getBackgroundOfTheDay() {
+      const day = getDayOfYear(new Date());
+      return backgrounds[day % backgrounds.length];
+    }
+
+    // Goal Logic
+    const goalInput = document.getElementById('goalInput');
+    const goalDisplay = document.getElementById('goalDisplay');
+    const streakDisplay = document.getElementById('streakDisplay');
+    const quoteText = document.getElementById('quoteText');
+    const quoteAuthor = document.getElementById('quoteAuthor');
+    const today = new Date().toISOString().slice(0, 10);
+
+    function splitQuote(q) {
+      const parts = q.split(' – ');
+      return [parts[0], parts[1] || ''];
+    }
+
+    function saveGoal() {
+      const goal = goalInput.value.trim();
+      if (goal) {
+        localStorage.setItem('dailyGoal', goal);
+        localStorage.setItem('goalDate', today);
+        localStorage.setItem('goalDone', 'false');
+        displayGoal();
       }
+    }
 
-      function saveGoal() {
-        const goal = goalInput.value.trim();
-        if (goal) {
-          localStorage.setItem('dailyGoal', goal);
-          localStorage.setItem('goalDate', today);
-          localStorage.setItem('goalDone', 'false');
-          displayGoal();
-        }
+    function markDone() {
+      if (localStorage.getItem('goalDate') === today && localStorage.getItem('goalDone') !== 'true') {
+        localStorage.setItem('goalDone', 'true');
+        incrementStreak();
+        confetti({
+          particleCount: 100,
+          origin: { y: 1 },
+          spread: 200
+        });
       }
+    }
 
-      function markDone() {
-        if (localStorage.getItem('goalDate') === today) {
-          if (localStorage.getItem('goalDone') !== 'true') {
-            localStorage.setItem('goalDone', 'true');
-            incrementStreak();
-            alert('Goal marked as done! Great work.');
-          }
-        }
-      }
+    function incrementStreak() {
+      let streak = parseInt(localStorage.getItem('streak') || '0');
+      streak++;
+      localStorage.setItem('streak', streak);
+      streakDisplay.textContent = `🔥 Streak: ${streak} days`;
+    }
 
-      function incrementStreak() {
-        let streak = parseInt(localStorage.getItem('streak') || '0');
-        streak++;
-        localStorage.setItem('streak', streak);
-        streakDisplay.textContent = `🔥 Streak: ${streak} day${streak === 1 ? '' : 's'}`;
-      }
-
-      function displayGoal() {
-        const savedGoal = localStorage.getItem('dailyGoal');
-        const savedDate = localStorage.getItem('goalDate');
-        const streak = localStorage.getItem('streak') || 0;
-        if (savedDate === today && savedGoal) {
-          goalDisplay.textContent = `"${savedGoal}"`;
-          goalInput.value = savedGoal;
-        } else {
-          goalDisplay.textContent = "No goal set for today.";
-          goalInput.value = '';
-        }
-        streakDisplay.textContent = `🔥 Streak: ${streak} day${streak === 1 ? '' : 's'}`;
-      }
-
-      // Show quote and author separately
-      const quoteFull = getQuoteOfTheDay();
-      const lastDashIndex = quoteFull.lastIndexOf("–");
-      if (lastDashIndex > -1) {
-        quoteDiv.textContent = quoteFull.slice(0, lastDashIndex).trim().replace(/[“”]/g, '');
-        authorDiv.textContent = quoteFull.slice(lastDashIndex + 1).trim();
+    function displayGoal() {
+      const savedGoal = localStorage.getItem('dailyGoal');
+      const savedDate = localStorage.getItem('goalDate');
+      const streak = localStorage.getItem('streak') || 0;
+      if (savedDate === today && savedGoal) {
+        goalDisplay.textContent = `"${savedGoal}"`;
       } else {
-        quoteDiv.textContent = quoteFull;
-        authorDiv.textContent = "";
+        goalDisplay.textContent = "No goal set for today.";
       }
+      streakDisplay.textContent = `🔥 Streak: ${streak} days`;
+    }
 
-      displayGoal();
+    const quoteToday = getQuoteOfTheDay();
+    const [q, a] = splitQuote(quoteToday);
+    quoteText.textContent = q;
+    quoteAuthor.textContent = `– ${a}`;
+    document.body.style.backgroundImage = `linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 40%, #000 90%), url('${getBackgroundOfTheDay()}')`;
 
-      window.saveGoal = saveGoal;
-      window.markDone = markDone;
-    });
+    displayGoal();
   </script>
 </body>
 </html>
