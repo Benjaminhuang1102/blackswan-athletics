@@ -8,54 +8,104 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: 'Montserrat', sans-serif; background-color: black; color: white; overflow-x: hidden; }
+
     .hero {
-      position: relative; height: 100vh;
+      position: relative;
+      height: 100vh;
+      background-image: url('https://cdn.pixabay.com/photo/2017/08/01/08/29/running-2563876_1280.jpg');
       background-size: cover;
       background-position: center;
-      display: flex; flex-direction: column; justify-content: flex-start; align-items: center;
-      padding-top: 80px; text-align: center;
+      background-repeat: no-repeat;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      text-align: center;
     }
+
     .hero::before {
       content: "";
-      position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-      background: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.2) 40%, rgba(0,0,0,0) 60%);
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(0,0,0,1));
       z-index: 1;
     }
+
     .quote-box {
-      position: relative; z-index: 2; padding: 0 20px; max-width: 90%;
+      position: relative;
+      z-index: 2;
+      padding: 0 20px;
+      max-width: 90%;
+      margin-top: 30vh; /* Push quote lower */
     }
+
     #quoteText {
-      font-style: italic; line-height: 1.4;
+      font-style: italic;
+      line-height: 1.4;
       text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
       transition: font-size 0.3s ease;
     }
+
     #quoteAuthor {
-      font-size: 1.1rem; margin-top: 10px; color: #bbb;
+      font-size: 1.1rem;
+      margin-top: 10px;
+      color: #bbb;
       text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
     }
-    .scroll-indicator {
-      position: relative; z-index: 2; font-size: 1.4rem;
-      margin-top: 30px; opacity: 0.7; animation: bounce 2s infinite;
-    }
-    @keyframes bounce {
-      0%,100% { transform: translateY(0); }
-      50% { transform: translateY(8px); }
-    }
+
     .goal-section {
-      padding: 40px 20px; max-width: 500px; margin: 0 auto; background-color: #000;
+      padding: 40px 20px;
+      max-width: 500px;
+      margin: 0 auto;
+      background-color: #000;
     }
-    .streak { font-size: 1rem; color: #ffae00; margin-bottom: 15px; }
+
+    .streak {
+      font-size: 1rem;
+      color: #ffae00;
+      margin-bottom: 15px;
+    }
+
     input[type="text"] {
-      width: 100%; padding: 12px; border-radius: 10px; border: none; margin-bottom: 15px; font-size: 1rem;
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: none;
+      margin-bottom: 15px;
+      font-size: 1rem;
     }
+
     button {
-      width: 100%; padding: 12px; border-radius: 10px; font-size: 1rem; font-family: 'Rubik', sans-serif;
-      border: none; cursor: pointer; transition: background 0.3s ease; margin-top: 0.5rem;
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-family: 'Rubik', sans-serif;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      margin-top: 0.5rem;
     }
-    button.set { background-color: #007bff; color: white; }
-    button.set:hover { background-color: #0056b3; }
-    button.done { background-color: #00c853; color: white; margin-top: 10px; }
-    .goal-display { margin-top: 15px; font-size: 1.2rem; }
+
+    button.set {
+      background-color: #007bff;
+      color: white;
+    }
+
+    button.set:hover {
+      background-color: #0056b3;
+    }
+
+    button.done {
+      background-color: #00c853;
+      color: white;
+      margin-top: 10px;
+    }
+
+    .goal-display {
+      margin-top: 15px;
+      font-size: 1.2rem;
+    }
+
     @media (max-width: 600px) {
       #quoteText { font-size: 1.5rem; }
       #quoteAuthor { font-size: 1rem; }
@@ -71,7 +121,6 @@
       <div id="quoteText">Loading quote...</div>
       <div id="quoteAuthor"></div>
     </div>
-    <div class="scroll-indicator">⬇️</div>
   </section>
 
   <!-- GOAL SECTION -->
@@ -87,15 +136,7 @@
   <script src="quotes.js" defer></script>
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      const images = [
-        'https://images.unsplash.com/photo-1531990065079-0048c1a1e732?auto=format&fit=crop&w=800&q=80',
-        'https://images.unsplash.com/photo-1542362567-b07e54358753?auto=format&fit=crop&w=800&q=80',
-        'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=800&q=80'
-      ];
       const day = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
-      document.getElementById('hero').style.backgroundImage = `url('${images[day % images.length]}')`;
-
-      // Set quote
       const full = quotes[day % quotes.length] || "Stay strong. – Unknown";
       const parts = full.split("–").map(s => s.trim());
       const text = parts[0].replace(/(^"|"$)/g, '');
@@ -106,7 +147,7 @@
       const len = text.length;
       qt.style.fontSize = len <= 60 ? "2rem" : len <= 100 ? "1.5rem" : "1.2rem";
 
-      // Goal app logic
+      // Goal logic
       const today = new Date().toISOString().slice(0,10);
       const gi = document.getElementById('goalInput'), gd = document.getElementById('goalDisplay'),
             sd = document.getElementById('streakDisplay'), doneBtn = document.querySelector('button.done');
