@@ -4,150 +4,69 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Black Swan | Daily Goal</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&family=Rubik:wght@500&display=swap" rel="stylesheet">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Montserrat', sans-serif;
-      background-color: black;
-      color: white;
-      overflow-x: hidden;
-    }
-
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Montserrat', sans-serif; background-color: black; color: white; overflow-x: hidden; }
     .hero {
-      position: relative;
-      height: 100vh;
-      background: url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80') no-repeat center center / cover;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items: center;
-      padding-top: 80px;
-      text-align: center;
+      position: relative; height: 100vh;
+      background-size: cover;
+      background-position: center;
+      display: flex; flex-direction: column; justify-content: flex-start; align-items: center;
+      padding-top: 80px; text-align: center;
     }
-
-    .hero::after {
+    .hero::before {
       content: "";
-      position: absolute;
-      bottom: 0;
-      width: 100%;
-      height: 50%;
-      background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, #000 100%);
+      position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.2) 40%, rgba(0,0,0,0) 60%);
+      z-index: 1;
     }
-
     .quote-box {
-      position: relative;
-      z-index: 2;
-      padding: 0 20px;
-      max-width: 90%;
+      position: relative; z-index: 2; padding: 0 20px; max-width: 90%;
     }
-
     #quoteText {
-      font-style: italic;
-      line-height: 1.4;
+      font-style: italic; line-height: 1.4;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
       transition: font-size 0.3s ease;
     }
-
     #quoteAuthor {
-      font-size: 1rem;
-      margin-top: 10px;
-      color: #bbb;
+      font-size: 1.1rem; margin-top: 10px; color: #bbb;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
     }
-
     .scroll-indicator {
-      position: relative;
-      z-index: 2;
-      font-size: 1.4rem;
-      margin-top: 30px;
-      opacity: 0.6;
-      animation: bounce 2s infinite;
+      position: relative; z-index: 2; font-size: 1.4rem;
+      margin-top: 30px; opacity: 0.7; animation: bounce 2s infinite;
     }
-
     @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
+      0%,100% { transform: translateY(0); }
       50% { transform: translateY(8px); }
     }
-
     .goal-section {
-      padding: 40px 20px;
-      max-width: 500px;
-      margin: 0 auto;
-      background-color: #000;
+      padding: 40px 20px; max-width: 500px; margin: 0 auto; background-color: #000;
     }
-
-    .streak {
-      font-size: 1rem;
-      color: #ffae00;
-      margin-bottom: 15px;
-    }
-
+    .streak { font-size: 1rem; color: #ffae00; margin-bottom: 15px; }
     input[type="text"] {
-      width: 100%;
-      padding: 12px;
-      border-radius: 10px;
-      border: none;
-      margin-bottom: 15px;
-      font-size: 1rem;
+      width: 100%; padding: 12px; border-radius: 10px; border: none; margin-bottom: 15px; font-size: 1rem;
     }
-
     button {
-      width: 100%;
-      padding: 12px;
-      border-radius: 10px;
-      font-size: 1rem;
-      border: none;
-      cursor: pointer;
-      transition: background 0.3s ease;
+      width: 100%; padding: 12px; border-radius: 10px; font-size: 1rem; font-family: 'Rubik', sans-serif;
+      border: none; cursor: pointer; transition: background 0.3s ease; margin-top: 0.5rem;
     }
-
-    button.set {
-      background-color: #007bff;
-      color: white;
-    }
-
-    button.set:hover {
-      background-color: #0056b3;
-    }
-
-    button.done {
-      background-color: #00c853;
-      color: white;
-      margin-top: 10px;
-    }
-
-    .goal-display {
-      margin-top: 15px;
-      font-size: 1.2rem;
-    }
-
+    button.set { background-color: #007bff; color: white; }
+    button.set:hover { background-color: #0056b3; }
+    button.done { background-color: #00c853; color: white; margin-top: 10px; }
+    .goal-display { margin-top: 15px; font-size: 1.2rem; }
     @media (max-width: 600px) {
-      #quoteText {
-        font-size: 1.3rem;
-      }
-
-      #quoteAuthor {
-        font-size: 0.9rem;
-      }
-
-      button {
-        font-size: 0.95rem;
-      }
-
-      .goal-display {
-        font-size: 1rem;
-      }
+      #quoteText { font-size: 1.5rem; }
+      #quoteAuthor { font-size: 1rem; }
+      button { font-size: 0.95rem; }
     }
   </style>
 </head>
 <body>
 
   <!-- QUOTE SECTION -->
-  <section class="hero">
+  <section class="hero" id="hero">
     <div class="quote-box">
       <div id="quoteText">Loading quote...</div>
       <div id="quoteAuthor"></div>
@@ -165,69 +84,63 @@
     <button class="done" onclick="markDone()">Mark as Done ✅</button>
   </section>
 
-  <!-- Load Quote Logic -->
-  <script src="quotes.js"></script>
+  <script src="quotes.js" defer></script>
   <script>
-    function getQuoteOfTheDay() {
-      const dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
-      return quotes[dayOfYear % quotes.length];
-    }
-
     document.addEventListener("DOMContentLoaded", () => {
-      const quoteTextEl = document.getElementById("quoteText");
-      const quoteAuthorEl = document.getElementById("quoteAuthor");
+      const images = [
+        'https://images.unsplash.com/photo-1531990065079-0048c1a1e732?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1542362567-b07e54358753?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=800&q=80'
+      ];
+      const day = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
+      document.getElementById('hero').style.backgroundImage = `url('${images[day % images.length]}')`;
 
-      const fullQuote = getQuoteOfTheDay();
-      const [text, author] = fullQuote.split("–").map(part => part.trim());
+      // Set quote
+      const full = quotes[day % quotes.length] || "Stay strong. – Unknown";
+      const parts = full.split("–").map(s => s.trim());
+      const text = parts[0].replace(/(^"|"$)/g, '');
+      const author = parts[1] || "Unknown";
+      const qt = document.getElementById('quoteText'), qa = document.getElementById('quoteAuthor');
+      qt.textContent = `“${text}”`; qa.textContent = `– ${author}`;
 
-      quoteTextEl.textContent = `"${text}"`;
-      quoteAuthorEl.textContent = `– ${author || "Unknown"}`;
-
-      // Adjust font size
       const len = text.length;
-      if (len <= 60) quoteTextEl.style.fontSize = "2rem";
-      else if (len <= 100) quoteTextEl.style.fontSize = "1.5rem";
-      else quoteTextEl.style.fontSize = "1.2rem";
+      qt.style.fontSize = len <= 60 ? "2rem" : len <= 100 ? "1.5rem" : "1.2rem";
 
-      // Goal tracking
-      const today = new Date().toISOString().slice(0, 10);
-      const goalInput = document.getElementById("goalInput");
-      const goalDisplay = document.getElementById("goalDisplay");
-      const streakDisplay = document.getElementById("streakDisplay");
+      // Goal app logic
+      const today = new Date().toISOString().slice(0,10);
+      const gi = document.getElementById('goalInput'), gd = document.getElementById('goalDisplay'),
+            sd = document.getElementById('streakDisplay'), doneBtn = document.querySelector('button.done');
 
-      function displayGoal() {
-        const goal = localStorage.getItem("dailyGoal");
-        const goalDate = localStorage.getItem("goalDate");
-        const done = localStorage.getItem("goalDone");
-        const streak = localStorage.getItem("streak") || 0;
-
-        goalDisplay.textContent = (goalDate === today && goal) 
-          ? (done === "true" ? `"${goal}" ✅` : `"${goal}" – Not completed`)
-          : "No goal set for today.";
-
-        streakDisplay.textContent = `🔥 Streak: ${streak} days`;
+      function display() {
+        const goal = localStorage.getItem('dailyGoal'), gdDate = localStorage.getItem('goalDate'),
+              done = localStorage.getItem('goalDone'), streak = localStorage.getItem('streak')||0;
+        gd.textContent = (gdDate===today && goal)
+                         ? (done==='true'? `"${goal}" ✅`: `"${goal}" – Not completed`)
+                         : "No goal set for today.";
+        sd.textContent = `🔥 Streak: ${streak} days`;
+        doneBtn.disabled = !(gdDate===today && goal && done!=='true');
       }
 
-      window.saveGoal = function () {
-        const goal = goalInput.value.trim();
-        if (!goal) return;
-        localStorage.setItem("dailyGoal", goal);
-        localStorage.setItem("goalDate", today);
-        localStorage.setItem("goalDone", "false");
-        displayGoal();
-      }
+      window.saveGoal = () => {
+        const g = gi.value.trim();
+        if (!g) return;
+        localStorage.setItem('dailyGoal', g);
+        localStorage.setItem('goalDate', today);
+        localStorage.setItem('goalDone', 'false');
+        display();
+      };
 
-      window.markDone = function () {
-        if (localStorage.getItem("goalDate") === today && localStorage.getItem("goalDone") !== "true") {
-          localStorage.setItem("goalDone", "true");
-          let streak = parseInt(localStorage.getItem("streak") || '0');
-          localStorage.setItem("streak", ++streak);
-          displayGoal();
-          alert("🎉 Goal marked as done!");
+      window.markDone = () => {
+        if (localStorage.getItem('goalDate')===today && localStorage.getItem('goalDone')!=='true') {
+          localStorage.setItem('goalDone', 'true');
+          let st = parseInt(localStorage.getItem('streak')||'0') + 1;
+          localStorage.setItem('streak', st);
+          display();
+          alert('🎉 Goal completed!');
         }
-      }
+      };
 
-      displayGoal();
+      display();
     });
   </script>
 </body>
