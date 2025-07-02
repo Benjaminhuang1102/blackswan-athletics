@@ -104,11 +104,13 @@
       ];
 
       function getQuoteOfTheDay() {
-        const today = new Date();
-        const start = new Date(Date.UTC(today.getFullYear(), 0, 0));
-        const now = new Date(Date.UTC(today.getFullYear(), today.getMonth(), today.getDate()));
-        const dayOfYear = Math.floor((now - start) / (1000 * 60 * 60 * 24));
+        const now = new Date();
+        const start = new Date(now.getFullYear(), 0, 0);
+        const diff = now - start;
+        const oneDay = 1000 * 60 * 60 * 24;
+        const dayOfYear = Math.floor(diff / oneDay);
         const index = dayOfYear % quotes.length;
+        console.log("Day of year:", dayOfYear, "Quote index:", index);
         return quotes[index];
       }
 
@@ -157,10 +159,10 @@
         streakDisplay.textContent = `🔥 Streak: ${streak} days`;
       }
 
-      // 🧠 Set quote of the day dynamically
+      // ✅ Finally set the quote of the day:
       quoteDiv.textContent = getQuoteOfTheDay();
 
-      // Initialize
+      // ✅ Display saved goal
       displayGoal();
     });
   </script>
