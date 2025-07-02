@@ -88,7 +88,7 @@
     <button onclick="saveGoal()">Set Goal</button>
     <div class="goal-display" id="goalDisplay"></div>
     <button class="done" onclick="markDone()">Mark as Done ✅</button>
-    <div class="quote" id="quote">Loading daily quote...</div>
+    <div class="quote" id="quote">Loading quote...</div>
   </div>
 
   <script>
@@ -104,20 +104,22 @@
       ];
 
       function getQuoteOfTheDay() {
-        const now = new Date();
-        const start = new Date(now.getFullYear(), 0, 0);
-        const diff = now - start;
-        const oneDay = 1000 * 60 * 60 * 24;
-        const dayOfYear = Math.floor(diff / oneDay);
+        const today = new Date();
+        const dayOfYear = Math.floor(
+          (Date.UTC(today.getFullYear(), today.getMonth(), today.getDate()) -
+          Date.UTC(today.getFullYear(), 0, 0)) / 86400000
+        );
         const index = dayOfYear % quotes.length;
-        console.log("Day of year:", dayOfYear, "Quote index:", index);
         return quotes[index];
       }
 
+      // Show daily quote
+      document.getElementById("quote").textContent = getQuoteOfTheDay();
+
+      // Daily goal logic
       const goalInput = document.getElementById('goalInput');
       const goalDisplay = document.getElementById('goalDisplay');
       const streakDisplay = document.getElementById('streakDisplay');
-      const quoteDiv = document.getElementById('quote');
       const today = new Date().toISOString().slice(0, 10);
 
       function saveGoal() {
@@ -131,20 +133,14 @@
       }
 
       function markDone() {
-        if (localStorage.getItem('goalDate') === today) {
-          if (localStorage.getItem('goalDone') !== 'true') {
-            localStorage.setItem('goalDone', 'true');
-            incrementStreak();
-            alert('Goal marked as done! Great work.');
-          }
+        if (localStorage.getItem('goalDate') === today &&
+            localStorage.getItem('goalDone') !== 'true') {
+          localStorage.setItem('goalDone', 'true');
+          let streak = parseInt(localStorage.getItem('streak') || '0') + 1;
+          localStorage.setItem('streak', streak);
+          streakDisplay.textContent = `🔥 Streak: ${streak} days`;
+          alert('Goal marked as done! Great work.');
         }
-      }
-
-      function incrementStreak() {
-        let streak = parseInt(localStorage.getItem('streak') || '0');
-        streak++;
-        localStorage.setItem('streak', streak);
-        streakDisplay.textContent = `🔥 Streak: ${streak} days`;
       }
 
       function displayGoal() {
@@ -159,12 +155,9 @@
         streakDisplay.textContent = `🔥 Streak: ${streak} days`;
       }
 
-      // ✅ Finally set the quote of the day:
-      quoteDiv.textContent = getQuoteOfTheDay();
-
-      // ✅ Display saved goal
       displayGoal();
     });
   </script>
 </body>
 </html>
+
