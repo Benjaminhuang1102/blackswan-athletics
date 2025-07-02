@@ -1,68 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Black Swan | Daily Goal</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&display=swap" rel="stylesheet">
   <style>
-    body {
+    * {
       margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
       font-family: 'Montserrat', sans-serif;
-      background: url('https://images.unsplash.com/photo-1550345332-09e3acfa90f8?auto=format&fit=crop&w=1950&q=80') no-repeat center center fixed;
+      background: url('https://images.unsplash.com/photo-1600488995262-02e5ec8b3c6b') no-repeat center center fixed;
       background-size: cover;
-      position: relative;
+      color: #fff;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      align-items: center;
       justify-content: center;
-      color: #fff;
+      align-items: center;
+      padding: 20px;
+      text-align: center;
+      position: relative;
     }
     body::before {
       content: "";
       position: absolute;
       top: 0; left: 0;
       width: 100%; height: 100%;
-      background-color: rgba(0, 0, 0, 0.65);
+      background: rgba(0, 0, 0, 0.6);
       z-index: 0;
     }
-    .container {
+    .content {
       position: relative;
       z-index: 1;
-      max-width: 500px;
-      padding: 2rem;
-      background-color: rgba(18, 18, 18, 0.85);
-      border-radius: 15px;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
-      text-align: center;
+      max-width: 600px;
+      width: 100%;
     }
     h1 {
-      font-size: 2rem;
-      margin-bottom: 10px;
-      color: #ffffff;
-    }
-    .streak {
-      font-size: 1rem;
+      font-size: 3rem;
       margin-bottom: 20px;
       color: #ffae00;
     }
+    .streak {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+    }
     input[type="text"] {
       width: 100%;
-      padding: 12px;
+      padding: 14px;
       font-size: 1rem;
       border: none;
-      border-radius: 8px;
-      margin-bottom: 10px;
+      border-radius: 10px;
+      margin-bottom: 15px;
     }
     button {
       width: 100%;
-      padding: 12px;
+      padding: 14px;
       font-size: 1rem;
       background-color: #8e44ad;
       color: white;
       border: none;
-      border-radius: 8px;
+      border-radius: 10px;
       cursor: pointer;
       margin-top: 10px;
       transition: background 0.3s ease;
@@ -70,42 +71,34 @@
     button:hover {
       background-color: #732d91;
     }
-    button.done {
+    .done {
       background-color: #00c853;
     }
-    .goal-display {
-      margin-top: 20px;
-      font-size: 1.2rem;
-      color: #ffffff;
-    }
     .quote {
-      font-size: 0.9rem;
-      margin-top: 10px;
+      font-size: 1.8rem;
       font-style: italic;
-      color: #bbb;
-      min-height: 40px;
+      margin-top: 40px;
+      color: #ffffff;
+      line-height: 1.5;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
     }
-    footer {
-      margin-top: 30px;
-      font-size: 0.75rem;
-      color: #aaa;
+    .goal-display {
+      font-size: 1.4rem;
+      margin-top: 20px;
+      color: #f0f0f0;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Today's Goal</h1>
+  <div class="content">
+    <h1>Daily Goal</h1>
     <div class="streak" id="streakDisplay">🔥 Streak: 0 days</div>
     <input type="text" id="goalInput" placeholder="Set your daily goal..." />
     <button onclick="saveGoal()">Set Goal</button>
-    <div class="goal-display" id="goalDisplay"></div>
+    <div class="goal-display" id="goalDisplay">No goal set for today.</div>
     <button class="done" onclick="markDone()">Mark as Done ✅</button>
     <div class="quote" id="quote">Loading quote...</div>
   </div>
-
-  <footer>
-    &copy; 2025 Black Swan Athletics — Train Different.
-  </footer>
 
   <script>
     const quotes = [
@@ -113,8 +106,7 @@
       "“Champions keep playing until they get it right.” – Billie Jean King",
       "“Hard work beats talent when talent doesn’t work hard.” – Tim Notke",
       "“It’s not whether you get knocked down; it’s whether you get up.” – Vince Lombardi",
-      "“Success isn’t owned. It’s leased. And rent is due every day.” – J.J. Watt",
-      "“The difference between the impossible and the possible lies in a person’s determination.” – Tommy Lasorda"
+      "“Success isn’t owned. It’s leased. And rent is due every day.” – J.J. Watt"
     ];
 
     function getDayOfYear(date) {
@@ -125,8 +117,7 @@
 
     function getQuoteOfTheDay() {
       const dayOfYear = getDayOfYear(new Date());
-      const index = dayOfYear % quotes.length;
-      return quotes[index];
+      return quotes[dayOfYear % quotes.length];
     }
 
     document.addEventListener("DOMContentLoaded", () => {
@@ -170,6 +161,8 @@
 
       quoteDiv.textContent = getQuoteOfTheDay();
       displayGoal();
+      window.saveGoal = saveGoal;
+      window.markDone = markDone;
     });
   </script>
 </body>
