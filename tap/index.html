@@ -1,115 +1,142 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Black Swan | Daily Goal</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&family=Playfair+Display:ital@1&display=swap" rel="stylesheet" />
-  <style>
-    * {
-      margin: 0; padding: 0; box-sizing: border-box;
-    }
-    body {
-      font-family: 'Montserrat', sans-serif;
-      background: url('https://images.unsplash.com/photo-1600488995262-02e5ec8b3c6b') no-repeat center center fixed;
-      background-size: cover;
-      color: #fff;
-      min-height: 120vh; /* tall enough to scroll */
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start; /* start at top */
-      align-items: center;
-      padding: 40px 20px 80px; /* more padding for scroll */
-      text-align: center;
-      position: relative;
-      overflow-y: auto;
-    }
-    body::before {
-      content: "";
-      position: fixed; /* fixed so stays behind on scroll */
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.6);
-      z-index: 0;
-    }
-    .content {
-      position: relative;
-      z-index: 1;
-      max-width: 600px;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .quote {
-      font-family: 'Playfair Display', serif;
-      font-style: italic;
-      font-size: 2.2rem;
-      margin-bottom: 50px;
-      color: #fff;
-      line-height: 1.5;
-      text-shadow: 0 3px 12px rgba(0, 0, 0, 0.6);
-      max-width: 90%;
-      user-select: none;
-      min-height: 120px; /* consistent height so layout stable */
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0 10px;
-    }
-    h1 {
-      font-size: 3rem;
-      margin-bottom: 20px;
-      color: #ffae00;
-    }
-    .streak {
-      font-size: 1.2rem;
-      margin-bottom: 20px;
-    }
-    input[type="text"] {
-      width: 100%;
-      padding: 14px;
-      font-size: 1rem;
-      border: none;
-      border-radius: 10px;
-      margin-bottom: 15px;
-      text-align: center;
-    }
-    button {
-      width: 100%;
-      padding: 14px;
-      font-size: 1rem;
-      background-color: #8e44ad;
-      color: white;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      margin-top: 10px;
-      transition: background 0.3s ease;
-    }
-    button:hover {
-      background-color: #732d91;
-    }
-    button.done {
-      background-color: #00c853;
-    }
-    .goal-display {
-      font-size: 1.4rem;
-      margin-top: 20px;
-      color: #f0f0f0;
-      min-height: 48px; /* consistent spacing */
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Black Swan | Daily Goal</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&family=Playfair+Display:ital@1&display=swap" rel="stylesheet" />
+<style>
+  html, body {
+    margin: 0; padding: 0; height: 100%;
+    font-family: 'Montserrat', sans-serif;
+    background-color: black;
+    color: white;
+    overflow-y: auto;
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .quote-section {
+    position: relative;
+    height: 40vh;
+    min-height: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0 20px;
+    overflow: hidden;
+  }
+
+  .quote-section::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: url('https://images.unsplash.com/photo-1600488995262-02e5ec8b3c6b?auto=format&fit=crop&w=1200&q=80') center center / cover no-repeat;
+    opacity: 0.12; /* super dark */
+    z-index: 0;
+    transition: opacity 0.5s ease;
+  }
+
+  /* gradient fade from image bottom to black */
+  .quote-section::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: 0; height: 100px;
+    background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, black 100%);
+    z-index: 1;
+  }
+
+  .quote-text {
+    position: relative;
+    z-index: 2;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 2.5rem;
+    max-width: 800px;
+    line-height: 1.4;
+    user-select: none;
+    color: white;
+    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
+  }
+
+  .content {
+    background: black;
+    padding: 40px 20px;
+    max-width: 600px;
+    margin: 0 auto 40px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  h1 {
+    color: #ffae00;
+    font-size: 3rem;
+    margin-bottom: 20px;
+  }
+
+  .streak {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+  }
+
+  input[type="text"] {
+    width: 100%;
+    padding: 14px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+
+  button {
+    width: 100%;
+    padding: 14px;
+    font-size: 1rem;
+    background-color: #8e44ad;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.3s ease;
+  }
+  button:hover {
+    background-color: #732d91;
+  }
+  button.done {
+    background-color: #00c853;
+  }
+
+  .goal-display {
+    font-size: 1.4rem;
+    margin-top: 20px;
+    color: #f0f0f0;
+    min-height: 48px;
+    text-align: center;
+  }
+</style>
 </head>
 <body>
-  <div class="content">
-    <div class="quote" id="quote">Loading quote...</div>
+
+  <section class="quote-section">
+    <div class="quote-text" id="quote">Loading quote...</div>
+  </section>
+
+  <main class="content">
     <h1>Daily Goal</h1>
     <div class="streak" id="streakDisplay">🔥 Streak: 0 days</div>
-    <input type="text" id="goalInput" placeholder="Set your daily goal..." />
+    <input type="text" id="goalInput" placeholder="Set your daily goal..." autocomplete="off" />
     <button onclick="saveGoal()">Set Goal</button>
     <div class="goal-display" id="goalDisplay">No goal set for today.</div>
     <button class="done" onclick="markDone()">Mark as Done ✅</button>
-  </div>
+  </main>
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
@@ -154,7 +181,6 @@
           let streak = parseInt(localStorage.getItem('streak') || '0') + 1;
           localStorage.setItem('streak', streak);
           streakDisplay.textContent = `🔥 Streak: ${streak} day${streak === 1 ? '' : 's'}`;
-          // alert('Goal marked as done! Great work.');
         }
       }
 
@@ -179,5 +205,6 @@
       window.markDone = markDone;
     });
   </script>
+
 </body>
 </html>
