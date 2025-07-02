@@ -1,169 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Black Swan | Daily Goal</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&family=Playfair+Display:ital@1&display=swap" rel="stylesheet" />
-<style>
-  html, body {
-    margin: 0; padding: 0; height: 100%;
-    font-family: 'Montserrat', sans-serif;
-    background-color: black;
-    color: white;
-    overflow-y: auto;
-  }
-
-  body {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .quote-section {
-    position: relative;
-    height: 40vh;
-    min-height: 250px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 0 20px;
-    overflow: hidden;
-  }
-
-  .quote-section::before {
-    content: "";
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: url('https://images.unsplash.com/photo-1600488995262-02e5ec8b3c6b?auto=format&fit=crop&w=1200&q=80') center center / cover no-repeat;
-    opacity: 0.12; /* super dark */
-    z-index: 0;
-    transition: opacity 0.5s ease;
-  }
-
-  /* gradient fade from image bottom to black */
-  .quote-section::after {
-    content: "";
-    position: absolute;
-    left: 0; right: 0; bottom: 0; height: 100px;
-    background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, black 100%);
-    z-index: 1;
-  }
-
-  .quote-text {
-    position: relative;
-    z-index: 2;
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
-    font-size: 2.5rem;
-    max-width: 800px;
-    line-height: 1.4;
-    user-select: none;
-    color: white;
-    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
-  }
-
-  .content {
-    background: black;
-    padding: 40px 20px;
-    max-width: 600px;
-    margin: 0 auto 40px;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  h1 {
-    color: #ffae00;
-    font-size: 3rem;
-    margin-bottom: 20px;
-  }
-
-  .streak {
-    font-size: 1.2rem;
-    margin-bottom: 20px;
-  }
-
-  input[type="text"] {
-    width: 100%;
-    padding: 14px;
-    font-size: 1rem;
-    border: none;
-    border-radius: 10px;
-    margin-bottom: 15px;
-    text-align: center;
-  }
-
-  button {
-    width: 100%;
-    padding: 14px;
-    font-size: 1rem;
-    background-color: #8e44ad;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    margin-top: 10px;
-    transition: background 0.3s ease;
-  }
-  button:hover {
-    background-color: #732d91;
-  }
-  button.done {
-    background-color: #00c853;
-  }
-
-  .goal-display {
-    font-size: 1.4rem;
-    margin-top: 20px;
-    color: #f0f0f0;
-    min-height: 48px;
-    text-align: center;
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Black Swan | Daily Goal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 20px 40px;
+      background:
+        linear-gradient(to bottom, rgba(0,0,0,0.7) 30%, rgba(0,0,0,1) 80%),
+        url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
+      background-size: cover;
+    }
+    .container {
+      max-width: 600px;
+      width: 100%;
+      margin-top: 60px;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+    #quoteText {
+      font-size: 2rem;
+      font-style: italic;
+      line-height: 1.4;
+      margin-bottom: 10px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.7);
+    }
+    #quoteAuthor {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #888;
+      margin-bottom: 50px;
+      text-shadow: none;
+    }
+    h1 {
+      font-size: 2.8rem;
+      color: #ffae00;
+      margin-bottom: 20px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+    }
+    .streak {
+      font-size: 1.3rem;
+      margin-bottom: 25px;
+      text-shadow: 0 1px 5px rgba(0,0,0,0.6);
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 14px 16px;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 12px;
+      margin-bottom: 15px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+    }
+    button {
+      width: 100%;
+      padding: 14px 0;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 12px;
+      background-color: #8e44ad;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-bottom: 15px;
+      box-shadow: 0 4px 15px rgba(142, 68, 173, 0.5);
+    }
+    button:hover {
+      background-color: #732d91;
+    }
+    button.done {
+      background-color: #00c853;
+      box-shadow: 0 4px 15px rgba(0, 200, 83, 0.6);
+      margin-top: 10px;
+    }
+    button.done:hover {
+      background-color: #009e38;
+    }
+    .goal-display {
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+      min-height: 36px;
+      color: #f0f0f0;
+      text-shadow: 0 1px 5px rgba(0,0,0,0.5);
+    }
+  </style>
 </head>
 <body>
+  <div class="container">
+    <div id="quoteText">Loading quote...</div>
+    <div id="quoteAuthor"></div>
 
-  <section class="quote-section">
-    <div class="quote-text" id="quote">Loading quote...</div>
-  </section>
-
-  <main class="content">
     <h1>Daily Goal</h1>
     <div class="streak" id="streakDisplay">🔥 Streak: 0 days</div>
     <input type="text" id="goalInput" placeholder="Set your daily goal..." autocomplete="off" />
     <button onclick="saveGoal()">Set Goal</button>
     <div class="goal-display" id="goalDisplay">No goal set for today.</div>
     <button class="done" onclick="markDone()">Mark as Done ✅</button>
-  </main>
+  </div>
 
+  <!-- Load quotes from external file -->
+  <script src="quote.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      const quotes = [
-        "“You miss 100% of the shots you don’t take.” – Wayne Gretzky",
-        "“Champions keep playing until they get it right.” – Billie Jean King",
-        "“Hard work beats talent when talent doesn’t work hard.” – Tim Notke",
-        "“It’s not whether you get knocked down; it’s whether you get up.” – Vince Lombardi",
-        "“Success isn’t owned. It’s leased. And rent is due every day.” – J.J. Watt"
-      ];
-
-      function getDayOfYear(date) {
-        const start = new Date(date.getFullYear(), 0, 0);
-        const diff = date - start + ((start.getTimezoneOffset() - date.getTimezoneOffset()) * 60 * 1000);
-        return Math.floor(diff / (1000 * 60 * 60 * 24));
-      }
-
-      function getQuoteOfTheDay() {
-        const dayOfYear = getDayOfYear(new Date());
-        return quotes[dayOfYear % quotes.length];
-      }
-
+      const quoteDiv = document.getElementById('quoteText');
+      const authorDiv = document.getElementById('quoteAuthor');
       const goalInput = document.getElementById('goalInput');
       const goalDisplay = document.getElementById('goalDisplay');
       const streakDisplay = document.getElementById('streakDisplay');
-      const quoteDiv = document.getElementById('quote');
       const today = new Date().toISOString().slice(0, 10);
+
+      function getQuoteOfTheDay() {
+        const todayDate = new Date();
+        const start = new Date(todayDate.getFullYear(), 0, 0);
+        const diff = todayDate - start;
+        const oneDay = 1000 * 60 * 60 * 24;
+        const dayOfYear = Math.floor(diff / oneDay);
+        const index = dayOfYear % quotes.length; // quotes from quote.js
+        return quotes[index];
+      }
 
       function saveGoal() {
         const goal = goalInput.value.trim();
@@ -176,18 +144,26 @@
       }
 
       function markDone() {
-        if (localStorage.getItem('goalDate') === today && localStorage.getItem('goalDone') !== 'true') {
-          localStorage.setItem('goalDone', 'true');
-          let streak = parseInt(localStorage.getItem('streak') || '0') + 1;
-          localStorage.setItem('streak', streak);
-          streakDisplay.textContent = `🔥 Streak: ${streak} day${streak === 1 ? '' : 's'}`;
+        if (localStorage.getItem('goalDate') === today) {
+          if (localStorage.getItem('goalDone') !== 'true') {
+            localStorage.setItem('goalDone', 'true');
+            incrementStreak();
+            alert('Goal marked as done! Great work.');
+          }
         }
+      }
+
+      function incrementStreak() {
+        let streak = parseInt(localStorage.getItem('streak') || '0');
+        streak++;
+        localStorage.setItem('streak', streak);
+        streakDisplay.textContent = `🔥 Streak: ${streak} day${streak === 1 ? '' : 's'}`;
       }
 
       function displayGoal() {
         const savedGoal = localStorage.getItem('dailyGoal');
         const savedDate = localStorage.getItem('goalDate');
-        const streak = parseInt(localStorage.getItem('streak') || '0');
+        const streak = localStorage.getItem('streak') || 0;
         if (savedDate === today && savedGoal) {
           goalDisplay.textContent = `"${savedGoal}"`;
           goalInput.value = savedGoal;
@@ -198,13 +174,22 @@
         streakDisplay.textContent = `🔥 Streak: ${streak} day${streak === 1 ? '' : 's'}`;
       }
 
-      quoteDiv.textContent = getQuoteOfTheDay();
+      // Show quote and author separately
+      const quoteFull = getQuoteOfTheDay();
+      const lastDashIndex = quoteFull.lastIndexOf("–");
+      if (lastDashIndex > -1) {
+        quoteDiv.textContent = quoteFull.slice(0, lastDashIndex).trim().replace(/[“”]/g, '');
+        authorDiv.textContent = quoteFull.slice(lastDashIndex + 1).trim();
+      } else {
+        quoteDiv.textContent = quoteFull;
+        authorDiv.textContent = "";
+      }
+
       displayGoal();
 
       window.saveGoal = saveGoal;
       window.markDone = markDone;
     });
   </script>
-
 </body>
 </html>
