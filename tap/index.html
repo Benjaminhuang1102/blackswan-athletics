@@ -22,12 +22,12 @@
     .hero {
       position: relative;
       height: 100vh;
-      background: url('https://images.unsplash.com/photo-1600488995262-02e5ec8b3c6b') no-repeat center center / cover;
+      background: url('https://images.unsplash.com/photo-1600488995262-02e5ec8b3c6b?auto=format&fit=crop&w=800&q=80') no-repeat center center / cover;
       display: flex;
       flex-direction: column;
-      justify-content: flex-end;
+      justify-content: flex-start;
       align-items: center;
-      padding: 20px;
+      padding-top: 80px;
       text-align: center;
     }
 
@@ -36,14 +36,15 @@
       position: absolute;
       bottom: 0;
       width: 100%;
-      height: 40%;
-      background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, #000 100%);
+      height: 50%;
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, #000 100%);
     }
 
     .quote-box {
       position: relative;
       z-index: 2;
-      margin-bottom: 40px;
+      padding: 0 20px;
+      max-width: 90%;
     }
 
     #quoteText {
@@ -62,7 +63,7 @@
       position: relative;
       z-index: 2;
       font-size: 1.4rem;
-      margin-top: 20px;
+      margin-top: 30px;
       opacity: 0.6;
       animation: bounce 2s infinite;
     }
@@ -123,6 +124,24 @@
       margin-top: 15px;
       font-size: 1.2rem;
     }
+
+    @media (max-width: 600px) {
+      #quoteText {
+        font-size: 1.3rem;
+      }
+
+      #quoteAuthor {
+        font-size: 0.9rem;
+      }
+
+      button {
+        font-size: 0.95rem;
+      }
+
+      .goal-display {
+        font-size: 1rem;
+      }
+    }
   </style>
 </head>
 <body>
@@ -146,6 +165,7 @@
     <button class="done" onclick="markDone()">Mark as Done ✅</button>
   </section>
 
+  <!-- Load Quote Logic -->
   <script src="quotes.js"></script>
   <script>
     function getQuoteOfTheDay() {
@@ -163,13 +183,13 @@
       quoteTextEl.textContent = `"${text}"`;
       quoteAuthorEl.textContent = `– ${author || "Unknown"}`;
 
-      // Adjust font size based on quote length
+      // Adjust font size
       const len = text.length;
-      if (len <= 60) quoteTextEl.style.fontSize = "2.2rem";
-      else if (len <= 100) quoteTextEl.style.fontSize = "1.7rem";
-      else quoteTextEl.style.fontSize = "1.3rem";
+      if (len <= 60) quoteTextEl.style.fontSize = "2rem";
+      else if (len <= 100) quoteTextEl.style.fontSize = "1.5rem";
+      else quoteTextEl.style.fontSize = "1.2rem";
 
-      // Goal logic
+      // Goal tracking
       const today = new Date().toISOString().slice(0, 10);
       const goalInput = document.getElementById("goalInput");
       const goalDisplay = document.getElementById("goalDisplay");
@@ -203,7 +223,7 @@
           let streak = parseInt(localStorage.getItem("streak") || '0');
           localStorage.setItem("streak", ++streak);
           displayGoal();
-          alert("🎉 Goal marked as done! Keep it up!");
+          alert("🎉 Goal marked as done!");
         }
       }
 
