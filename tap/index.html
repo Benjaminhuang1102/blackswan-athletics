@@ -9,7 +9,7 @@
     body {
       margin: 0;
       font-family: 'Montserrat', sans-serif;
-      background: url('https://images.unsplash.com/photo-1600488995262-02e5ec8b3c6b') no-repeat center center fixed;
+      background: url('https://images.unsplash.com/photo-1550345332-09e3acfa90f8?auto=format&fit=crop&w=1950&q=80') no-repeat center center fixed;
       background-size: cover;
       position: relative;
       min-height: 100vh;
@@ -107,7 +107,70 @@
     &copy; 2025 Black Swan Athletics — Train Different.
   </footer>
 
-  <script src="quotes.js"></script>
-  <script src="script.js"></script>
+  <script>
+    const quotes = [
+      "“You miss 100% of the shots you don’t take.” – Wayne Gretzky",
+      "“Champions keep playing until they get it right.” – Billie Jean King",
+      "“Hard work beats talent when talent doesn’t work hard.” – Tim Notke",
+      "“It’s not whether you get knocked down; it’s whether you get up.” – Vince Lombardi",
+      "“Success isn’t owned. It’s leased. And rent is due every day.” – J.J. Watt",
+      "“The difference between the impossible and the possible lies in a person’s determination.” – Tommy Lasorda"
+    ];
+
+    function getDayOfYear(date) {
+      const start = new Date(date.getFullYear(), 0, 0);
+      const diff = date - start + ((start.getTimezoneOffset() - date.getTimezoneOffset()) * 60 * 1000);
+      return Math.floor(diff / (1000 * 60 * 60 * 24));
+    }
+
+    function getQuoteOfTheDay() {
+      const dayOfYear = getDayOfYear(new Date());
+      const index = dayOfYear % quotes.length;
+      return quotes[index];
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const goalInput = document.getElementById('goalInput');
+      const goalDisplay = document.getElementById('goalDisplay');
+      const streakDisplay = document.getElementById('streakDisplay');
+      const quoteDiv = document.getElementById('quote');
+      const today = new Date().toISOString().slice(0, 10);
+
+      function saveGoal() {
+        const goal = goalInput.value.trim();
+        if (goal) {
+          localStorage.setItem('dailyGoal', goal);
+          localStorage.setItem('goalDate', today);
+          localStorage.setItem('goalDone', 'false');
+          displayGoal();
+        }
+      }
+
+      function markDone() {
+        if (localStorage.getItem('goalDate') === today && localStorage.getItem('goalDone') !== 'true') {
+          localStorage.setItem('goalDone', 'true');
+          let streak = parseInt(localStorage.getItem('streak') || '0') + 1;
+          localStorage.setItem('streak', streak);
+          streakDisplay.textContent = `🔥 Streak: ${streak} days`;
+          alert('Goal marked as done! Great work.');
+        }
+      }
+
+      function displayGoal() {
+        const savedGoal = localStorage.getItem('dailyGoal');
+        const savedDate = localStorage.getItem('goalDate');
+        const streak = localStorage.getItem('streak') || 0;
+        if (savedDate === today && savedGoal) {
+          goalDisplay.textContent = `"${savedGoal}"`;
+        } else {
+          goalDisplay.textContent = "No goal set for today.";
+        }
+        streakDisplay.textContent = `🔥 Streak: ${streak} days`;
+      }
+
+      quoteDiv.textContent = getQuoteOfTheDay();
+      displayGoal();
+    });
+  </script>
 </body>
 </html>
