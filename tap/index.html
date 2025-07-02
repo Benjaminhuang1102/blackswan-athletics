@@ -162,8 +162,20 @@
       }
 
       const { text, author } = getQuoteOfTheDay();
-      document.getElementById('quoteText').textContent = text;
-      document.getElementById('quoteAuthor').textContent = author || "";
+const quoteTextEl = document.getElementById('quoteText');
+const quoteAuthorEl = document.getElementById('quoteAuthor');
+
+quoteTextEl.textContent = text;
+quoteAuthorEl.textContent = author || "";
+
+const length = text.length;
+if (length <= 60) {
+  quoteTextEl.style.fontSize = "2.1rem";
+} else if (length <= 100) {
+  quoteTextEl.style.fontSize = "1.7rem";
+} else {
+  quoteTextEl.style.fontSize = "1.3rem";
+}
 
       const goalInput = document.getElementById('goalInput');
       const goalDisplay = document.getElementById('goalDisplay');
