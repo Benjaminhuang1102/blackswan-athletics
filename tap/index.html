@@ -1,193 +1,160 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Black Swan | Daily Goal</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
+
     body {
       font-family: 'Montserrat', sans-serif;
-      color: #fff;
-      background: #000;
+      color: white;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      justify-content: flex-start;
       align-items: center;
-      text-align: center;
+      background-color: black;
+      overflow-x: hidden;
+    }
+
+    .hero {
       position: relative;
+      width: 100%;
+      height: 60vh;
+      background: url('https://images.unsplash.com/photo-1508672019048-805c876b67e2?auto=format&fit=crop&w=800&q=80') no-repeat center center/cover;
     }
-    .background {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background-size: cover;
-      background-position: center;
-      z-index: -2;
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 50%;
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, #000 100%);
     }
-    .overlay {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: linear-gradient(to bottom, rgba(0,0,0,0.7) 30%, #000 90%);
-      z-index: -1;
+
+    .quote-box {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      z-index: 2;
+      padding: 0 1rem;
     }
-    .container {
-      padding: 2rem 1rem;
-      max-width: 500px;
-      margin-top: 20vh;
-    }
-    .quote {
-      font-size: 1.5rem;
+
+    .quote-text {
+      font-size: 1.4rem;
       font-style: italic;
-      margin-bottom: 0.5rem;
+      color: #ffffff;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.6);
     }
-    .author {
+
+    .quote-author {
+      margin-top: 0.5rem;
+      font-size: 1rem;
       color: #aaa;
-      font-size: 0.9rem;
-      margin-bottom: 2rem;
     }
+
+    .content {
+      width: 100%;
+      max-width: 600px;
+      padding: 2rem;
+      text-align: center;
+    }
+
     .streak {
-      font-size: 1.1rem;
+      font-size: 1.2rem;
       margin-bottom: 1rem;
+      color: #ffae00;
     }
+
     input[type="text"] {
       width: 100%;
-      padding: 12px;
-      border-radius: 8px;
-      border: none;
+      padding: 14px;
       font-size: 1rem;
-      margin-bottom: 10px;
+      border: none;
+      border-radius: 8px;
+      margin-bottom: 1rem;
     }
+
     button {
       width: 100%;
-      padding: 12px;
+      padding: 14px;
       font-size: 1rem;
       border: none;
       border-radius: 8px;
       cursor: pointer;
-      margin-bottom: 15px;
-      background-color: #8e44ad;
+      transition: background 0.3s ease;
+      margin-top: 0.5rem;
+    }
+
+    .set-btn {
+      background-color: #007BFF;
       color: white;
     }
-    .done {
+
+    .set-btn:hover {
+      background-color: #0056b3;
+    }
+
+    .done-btn {
       background-color: #00c853;
+      color: white;
     }
+
     .goal-display {
-      font-size: 1.2rem;
-      margin-bottom: 0.5rem;
+      font-size: 1.3rem;
+      margin-top: 1rem;
     }
-    .status {
+
+    .goal-status {
       font-size: 1rem;
-      color: #ccc;
-      margin-bottom: 2rem;
+      margin-top: 0.5rem;
+      color: red;
+    }
+
+    canvas.confetti {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 9999;
     }
   </style>
 </head>
 <body>
-  <div class="background" id="bgImage"></div>
-  <div class="overlay"></div>
-  <div class="container">
-    <div class="quote" id="quote">Loading quote...</div>
-    <div class="author" id="author"></div>
-    <div class="streak" id="streakDisplay">🔥 Streak: 0 days</div>
-    <input type="text" id="goalInput" placeholder="Set your daily goal..." />
-    <button onclick="saveGoal()">Set Goal</button>
-    <div class="goal-display" id="goalDisplay">No goal set for today.</div>
-    <div class="status" id="statusDiv">❌ Not Completed</div>
-    <button class="done" onclick="markDone()">Mark as Done ✅</button>
+
+  <div class="hero">
+    <div class="quote-box">
+      <div class="quote-text" id="quoteText">Loading quote...</div>
+      <div class="quote-author" id="quoteAuthor"></div>
+    </div>
   </div>
 
+  <div class="content">
+    <h2>Daily Goal</h2>
+    <div class="streak" id="streakDisplay">🔥 Streak: 0 days</div>
+    <input type="text" id="goalInput" placeholder="Set your daily goal..." />
+    <button class="set-btn" onclick="saveGoal()">Set Goal</button>
+    <div class="goal-display" id="goalDisplay">No goal set for today.</div>
+    <div class="goal-status" id="goalStatus">Not Completed</div>
+    <button class="done-btn" onclick="markDone()">Mark as Done ✅</button>
+  </div>
+
+  <canvas id="confettiCanvas" class="confetti"></canvas>
+
+  <script src="quotes.js"></script>
   <script>
-    const quotes = [
-      ["You miss 100% of the shots you don’t take.", "Wayne Gretzky"],
-      ["Champions keep playing until they get it right.", "Billie Jean King"],
-      ["Hard work beats talent when talent doesn’t work hard.", "Tim Notke"],
-      ["Success isn’t owned. It’s leased. And rent is due every day.", "J.J. Watt"],
-      ["If you train hard, you’ll not only be hard, you’ll be hard to beat.", "Herschel Walker"]
-    ];
-
-    const images = [
-      "https://images.unsplash.com/photo-1599058918141-13e6c98f5cd5",
-      "https://images.unsplash.com/photo-1600488995262-02e5ec8b3c6b",
-      "https://images.unsplash.com/photo-1508672019048-805c876b67e2"
-    ];
-
-    function getDayOfYear(date = new Date()) {
-      const start = new Date(date.getFullYear(), 0, 0);
-      const diff = date - start + ((start.getTimezoneOffset() - date.getTimezoneOffset()) * 60000);
-      return Math.floor(diff / (1000 * 60 * 60 * 24));
-    }
-
-    function displayQuote() {
-      const day = getDayOfYear();
-      const [quoteText, quoteAuthor] = quotes[day % quotes.length];
-      document.getElementById("quote").textContent = `“${quoteText}”`;
-      document.getElementById("author").textContent = `– ${quoteAuthor}`;
-    }
-
-    function setBackgroundImage() {
-      const day = getDayOfYear();
-      const img = images[day % images.length];
-      document.getElementById("bgImage").style.backgroundImage = `url('${img}')`;
-    }
-
-    const goalInput = document.getElementById('goalInput');
-    const goalDisplay = document.getElementById('goalDisplay');
-    const streakDisplay = document.getElementById('streakDisplay');
-    const statusDiv = document.getElementById('statusDiv');
-    const today = new Date().toISOString().slice(0, 10);
-
-    function saveGoal() {
-      const goal = goalInput.value.trim();
-      if (goal) {
-        localStorage.setItem('dailyGoal', goal);
-        localStorage.setItem('goalDate', today);
-        localStorage.setItem('goalDone', 'false');
-        displayGoal();
-      }
-    }
-
-    function markDone() {
-      if (localStorage.getItem('goalDate') === today && localStorage.getItem('goalDone') !== 'true') {
-        localStorage.setItem('goalDone', 'true');
-        incrementStreak();
-        displayGoal();
-        confetti({ particleCount: 150, spread: 70, origin: { y: 1.0 } });
-      }
-    }
-
-    function incrementStreak() {
-      let streak = parseInt(localStorage.getItem('streak') || '0');
-      streak++;
-      localStorage.setItem('streak', streak);
-    }
-
-    function displayGoal() {
-      const savedGoal = localStorage.getItem('dailyGoal');
-      const savedDate = localStorage.getItem('goalDate');
-      const savedDone = localStorage.getItem('goalDone');
-      const streak = localStorage.getItem('streak') || 0;
-
-      if (savedDate === today && savedGoal) {
-        goalDisplay.textContent = `"${savedGoal}"`;
-        statusDiv.textContent = savedDone === 'true' ? "✅ Goal Completed!" : "❌ Not Completed";
-      } else {
-        goalDisplay.textContent = "No goal set for today.";
-        statusDiv.textContent = "❌ Not Completed";
-      }
-      streakDisplay.textContent = `🔥 Streak: ${streak} days`;
-    }
-
-    displayQuote();
-    setBackgroundImage();
-    displayGoal();
-  </script>
-</body>
-</html>
+    function getQuoteOfTheDay() {
+      const day = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
+      const quote = quotes
