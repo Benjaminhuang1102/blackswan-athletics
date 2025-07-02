@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Black Swan | Daily Goal</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&family=Playfair+Display:ital@1&display=swap" rel="stylesheet" />
   <style>
     * {
       margin: 0; padding: 0; box-sizing: border-box;
@@ -14,18 +14,19 @@
       background: url('https://images.unsplash.com/photo-1600488995262-02e5ec8b3c6b') no-repeat center center fixed;
       background-size: cover;
       color: #fff;
-      min-height: 100vh;
+      min-height: 120vh; /* tall enough to scroll */
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: flex-start; /* start at top */
       align-items: center;
-      padding: 20px;
+      padding: 40px 20px 80px; /* more padding for scroll */
       text-align: center;
       position: relative;
+      overflow-y: auto;
     }
     body::before {
       content: "";
-      position: absolute;
+      position: fixed; /* fixed so stays behind on scroll */
       top: 0; left: 0; width: 100%; height: 100%;
       background: rgba(0, 0, 0, 0.6);
       z-index: 0;
@@ -35,6 +36,25 @@
       z-index: 1;
       max-width: 600px;
       width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .quote {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 2.2rem;
+      margin-bottom: 50px;
+      color: #fff;
+      line-height: 1.5;
+      text-shadow: 0 3px 12px rgba(0, 0, 0, 0.6);
+      max-width: 90%;
+      user-select: none;
+      min-height: 120px; /* consistent height so layout stable */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 10px;
     }
     h1 {
       font-size: 3rem;
@@ -52,6 +72,7 @@
       border: none;
       border-radius: 10px;
       margin-bottom: 15px;
+      text-align: center;
     }
     button {
       width: 100%;
@@ -71,30 +92,23 @@
     button.done {
       background-color: #00c853;
     }
-    .quote {
-      font-size: 1.8rem;
-      font-style: italic;
-      margin-top: 40px;
-      color: #fff;
-      line-height: 1.5;
-      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-    }
     .goal-display {
       font-size: 1.4rem;
       margin-top: 20px;
       color: #f0f0f0;
+      min-height: 48px; /* consistent spacing */
     }
   </style>
 </head>
 <body>
   <div class="content">
+    <div class="quote" id="quote">Loading quote...</div>
     <h1>Daily Goal</h1>
     <div class="streak" id="streakDisplay">🔥 Streak: 0 days</div>
     <input type="text" id="goalInput" placeholder="Set your daily goal..." />
     <button onclick="saveGoal()">Set Goal</button>
     <div class="goal-display" id="goalDisplay">No goal set for today.</div>
     <button class="done" onclick="markDone()">Mark as Done ✅</button>
-    <div class="quote" id="quote">Loading quote...</div>
   </div>
 
   <script>
