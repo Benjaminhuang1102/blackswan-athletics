@@ -88,7 +88,7 @@
     <button onclick="saveGoal()">Set Goal</button>
     <div class="goal-display" id="goalDisplay"></div>
     <button class="done" onclick="markDone()">Mark as Done ✅</button>
-    <div class="quote" id="quote">Loading quote...</div>
+    <div class="quote" id="quote">Loading daily quote...</div>
   </div>
 
   <script>
@@ -98,17 +98,16 @@
         "“Champions keep playing until they get it right.” – Billie Jean King",
         "“Hard work beats talent when talent doesn’t work hard.” – Tim Notke",
         "“It’s not whether you get knocked down; it’s whether you get up.” – Vince Lombardi",
-        "“The difference between the impossible and the possible lies in a person’s determination.” – Tommy Lasorda",
         "“Success isn’t owned. It’s leased. And rent is due every day.” – J.J. Watt",
+        "“The difference between the impossible and the possible lies in a person’s determination.” – Tommy Lasorda",
         "“Do something today that your future self will thank you for.” – Sean Patrick Flanery"
       ];
 
       function getQuoteOfTheDay() {
         const today = new Date();
-        const start = new Date(today.getFullYear(), 0, 0);
-        const diff = today - start;
-        const oneDay = 1000 * 60 * 60 * 24;
-        const dayOfYear = Math.floor(diff / oneDay);
+        const start = new Date(Date.UTC(today.getFullYear(), 0, 0));
+        const now = new Date(Date.UTC(today.getFullYear(), today.getMonth(), today.getDate()));
+        const dayOfYear = Math.floor((now - start) / (1000 * 60 * 60 * 24));
         const index = dayOfYear % quotes.length;
         return quotes[index];
       }
@@ -149,7 +148,6 @@
       function displayGoal() {
         const savedGoal = localStorage.getItem('dailyGoal');
         const savedDate = localStorage.getItem('goalDate');
-        const savedDone = localStorage.getItem('goalDone');
         const streak = localStorage.getItem('streak') || 0;
         if (savedDate === today && savedGoal) {
           goalDisplay.textContent = `"${savedGoal}"`;
@@ -159,10 +157,10 @@
         streakDisplay.textContent = `🔥 Streak: ${streak} days`;
       }
 
-      // Set quote of the day
+      // 🧠 Set quote of the day dynamically
       quoteDiv.textContent = getQuoteOfTheDay();
 
-      // Display saved goal on load
+      // Initialize
       displayGoal();
     });
   </script>
