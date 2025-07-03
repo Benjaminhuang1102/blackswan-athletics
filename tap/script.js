@@ -1,51 +1,44 @@
-let streak = parseInt(localStorage.getItem("streak")) || 0;
-let lastCompletedDate = localStorage.getItem("lastCompletedDate") || null;
+// File: tap/script.js
+document.addEventListener('DOMContentLoaded', () => {
+  // Quote
+  const { text, author } = getQuoteOfTheDay();
+  document.getElementById('quote').textContent = text;
+  document.getElementById('author').textContent = `– ${author}`;
 
-function updateDisplay() {
-  const goal = localStorage.getItem("dailyGoal") || "";
-  const completed = localStorage.getItem("goalCompleted") === "true";
-  const display = document.getElementById("goalDisplay");
-
-  if (!goal) {
-    display.textContent = "No goal set today.";
-  } else if (completed) {
-    display.textContent = `✅ Goal completed: ${goal}`;
-  } else {
-    display.textContent = `Goal not completed: ${goal}`;
-  }
-
-  document.getElementById("streakDisplay").textContent = `🔥 Streak: ${streak} days`;
-}
-
-function saveGoal() {
-  const goal = document.getElementById("goalInput").value.trim();
-  if (!goal) return;
-
+  // Goal logic
   const today = new Date().toDateString();
-  localStorage.setItem("dailyGoal", goal);
-  localStorage.setItem("goalCompleted", "false");
-  localStorage.setItem("goalDate", today);
-  updateDisplay();
-}
-
-function markDone() {
-  const today = new Date().toDateString();
-  const lastDate = localStorage.getItem("lastCompletedDate");
-
-  if (lastDate !== today) {
-    streak++;
-    localStorage.setItem("streak", streak);
-    localStorage.setItem("lastCompletedDate", today);
+  const data = JSON.parse(localStorage.getItem('goals')||'{}');
+  if (data[today]) {
+    document.getElementById('goalDisplay').textContent = data[today].done ?
+      `✅ ${data[today].goal}` : `❌ ${data[today].goal}`;
   }
+  updateStreak(data);
 
-  localStorage.setItem("goalCompleted", "true");
-  updateDisplay();
+  document.getElementById('saveBtn').addEventListener('click', () => {
+    const g = document.getElementById('goalInput').value.trim(); if (!g) return;
+    data[today] = { goal: g, done: false }; localStorage.setItem('goals', JSON.stringify(data));
+    document.getElementById('goalDisplay').textContent = `❌ ${g}`;
+    updateStreak(data);
+  });
 
-  // Confetti 🎉
-  const confetti = document.createElement("div");
-  confetti.className = "confetti";
-  document.body.appendChild(confetti);
-  setTimeout(() => confetti.remove(), 2000);
+  document.getElementById('doneBtn').addEventListener('click', () => {
+    if (!data[today] || data[today].done) return;
+    data[today].done = true; localStorage.setItem('goals', JSON.stringify(data));
+    document.getElementById('goalDisplay').textContent = `✅ ${data[today].goal}`;
+    updateStreak(data);
+    confetti();
+  });
+});
+
+function updateStreak(data) {
+  const today = new Date(); let count = 0;
+  for (let i=0; i<365; i++) {
+    const d = new Date(); d.setDate(today.getDate()-i);
+    const key = d.toDateString(); if (data[key] && data[key].done) count++; else break;
+  }
+  document.getElementById('streakDisplay').textContent = `🔥 Streak: ${count} days`;
 }
 
-window.onload = updateDisplay;
+function confetti() {
+  confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+}
