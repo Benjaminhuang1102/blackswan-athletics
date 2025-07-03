@@ -1,149 +1,160 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Black Swan | Daily Goal</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Black Swan | Daily Grind</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&display=swap" rel="stylesheet">
   <style>
     * {
-      margin: 0; padding: 0; box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
+
     body {
       font-family: 'Montserrat', sans-serif;
-      color: #fff;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items: center;
-      padding: 20px 15px;
-      position: relative;
       background: black;
+      color: white;
       overflow-x: hidden;
     }
-    /* Background image with dark overlay */
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw;
-      height: 50vh;
-      background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80') center/cover no-repeat;
-      opacity: 0.15;
-      z-index: -2;
-    }
-    body::after {
-      content: "";
-      position: fixed;
-      top: 50vh; left: 0;
-      width: 100vw;
-      height: 50vh;
-      background: linear-gradient(0deg, black 0%, transparent 100%);
-      z-index: -1;
+
+    .hero {
+      position: relative;
+      height: 100vh;
+      width: 100%;
+      overflow: hidden;
     }
 
-    .quote-container {
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
       width: 100%;
-      max-width: 480px;
-      padding: 20px 15px;
-      margin-bottom: 40px;
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6) 60%, black 100%);
+      z-index: 2;
+    }
+
+    .hero img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 1;
+    }
+
+    .quote-area {
+      position: relative;
+      z-index: 3;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .quote {
+      font-size: 2rem;
+      font-style: italic;
+      color: #fff;
+      margin-bottom: 0.5rem;
+      padding: 0 10px;
+    }
+
+    .author {
+      font-size: 1rem;
+      color: #aaa;
+    }
+
+    .content {
+      padding: 40px 20px;
+      max-width: 500px;
+      margin: 0 auto;
       text-align: center;
     }
-    #quote {
-      font-size: 1.9rem;
-      font-style: italic;
-      line-height: 1.4;
-      user-select: none;
-    }
-    #author {
-      margin-top: 10px;
-      font-size: 1.1rem;
-      color: #666666;
-      user-select: none;
+
+    h1 {
+      font-size: 2.2rem;
+      margin-bottom: 10px;
+      color: #00bcd4;
     }
 
-    .goal-container {
-      width: 100%;
-      max-width: 480px;
-      background: #000000cc;
-      padding: 25px 20px;
-      border-radius: 12px;
-      box-shadow: 0 6px 20px rgb(0 0 0 / 0.5);
+    .streak {
+      font-size: 1rem;
+      margin-bottom: 20px;
     }
-    #streakDisplay {
-      font-size: 1.2rem;
-      margin-bottom: 18px;
-      color: #ffae00;
-      font-weight: 600;
-    }
-    #goalDisplay {
-      font-size: 1.3rem;
-      margin-bottom: 18px;
-      min-height: 38px;
-      color: #f0f0f0;
-      word-wrap: break-word;
-    }
-    #goalInput {
+
+    input[type="text"] {
       width: 100%;
       padding: 14px;
-      font-size: 1.1rem;
-      border-radius: 10px;
+      font-size: 1rem;
       border: none;
-      margin-bottom: 12px;
-      outline: none;
-      box-shadow: inset 0 0 6px #2089dc;
+      border-radius: 8px;
+      margin-bottom: 15px;
     }
-    #goalInput::placeholder {
-      color: #a0a0a0;
-    }
+
     button {
       width: 100%;
       padding: 14px;
-      font-size: 1.15rem;
+      font-size: 1rem;
       border: none;
-      border-radius: 10px;
+      border-radius: 8px;
       cursor: pointer;
-      font-weight: 700;
-      font-family: 'Montserrat', sans-serif;
-      transition: background-color 0.3s ease;
-      user-select: none;
+      transition: background 0.3s ease;
     }
+
     #setGoalBtn {
-      background-color: #2089dc;
+      background-color: #2196f3;
       color: white;
-      margin-bottom: 15px;
+      margin-bottom: 10px;
     }
+
     #setGoalBtn:hover {
-      background-color: #1863b7;
+      background-color: #1976d2;
     }
+
     #doneBtn {
       background-color: #00c853;
       color: white;
     }
-    #doneBtn:hover {
-      background-color: #009636;
+
+    #doneBtn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .goal-display {
+      font-size: 1.2rem;
+      margin-top: 15px;
+      color: #eee;
     }
   </style>
 </head>
 <body>
-
-  <div class="quote-container">
-    <div id="quote">Loading quote...</div>
-    <div id="author"></div>
+  <div class="hero">
+    <img id="bgImage" src="" alt="Inspiration" />
+    <div class="quote-area">
+      <div id="quote" class="quote">Loading quote...</div>
+      <div id="author" class="author"></div>
+    </div>
   </div>
 
-  <div class="goal-container">
-    <div id="streakDisplay">🔥 Streak: 0 days</div>
-    <div id="goalDisplay">No goal set for today.</div>
+  <div class="content">
+    <h1>Daily Goal</h1>
+    <div class="streak" id="streakDisplay">🔥 Streak: 0 days</div>
     <input type="text" id="goalInput" placeholder="Set your daily goal..." />
     <button id="setGoalBtn">Set Goal</button>
+    <div class="goal-display" id="goalDisplay">No goal set for today.</div>
     <button id="doneBtn">Mark as Done ✅</button>
   </div>
 
-  <!-- Load the external quotes.js first -->
   <script src="quotes.js"></script>
-  <!-- Load the main script.js that uses quotes and manages goals -->
   <script src="script.js"></script>
 </body>
 </html>
