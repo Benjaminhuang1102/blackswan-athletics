@@ -1,26 +1,34 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Black Swan | Daily Goal</title>
-  <link rel="stylesheet" href="../style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&display=swap" rel="stylesheet">
 </head>
 <body class="tracker">
-  <!-- Faint watermark logo -->
-  <img id="watermark-logo" src="../assets/Black Swan Athletics Logo.png" alt="Black Swan Athletics Logo" />
+  <div class="background-image" id="background"></div>
+  <img src="../assets/Black Swan Athletics Logo" class="corner-logo" alt="Black Swan Logo" />
 
-  <div class="container">
+  <div class="top-section">
+    <div class="quote-wrapper">
+      <div class="quote-text" id="quote">Loading quote...</div>
+      <div class="quote-author" id="author"></div>
+    </div>
+  </div>
+
+  <div class="container goal-section">
     <h1>Today's Goal</h1>
     <div class="streak" id="streakDisplay">🔥 Streak: 0 days</div>
     <input type="text" id="goalInput" placeholder="Set your daily goal..." />
     <button onclick="saveGoal()">Set Goal</button>
     <div id="goalDisplay"></div>
     <button class="done" onclick="markDone()">Mark as Done ✅</button>
-    <div id="quote">Loading quote...</div>
   </div>
+
   <script src="quotes.js"></script>
+  <script src="images.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
