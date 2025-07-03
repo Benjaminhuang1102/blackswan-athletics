@@ -2,32 +2,28 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Black Swan | Daily Goal</title>
-  <link rel="stylesheet" href="../style.css" />
-  <script defer src="../quotes.js"></script>
-  <script defer src="../images.js"></script>
-  <script defer src="script.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Daily Goal – Black Swan</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&display=swap" rel="stylesheet">
 </head>
 <body>
-  <header class="hero">
-    <div class="overlay"></div>
-    <img src="../assets/Black Swan Athletics Logo.png" alt="Logo" class="logo" />
-    <div class="quote-container">
-      <div id="quote" class="quote-text">Loading...</div>
-      <div id="author" class="quote-author"></div>
+  <div class="overlay"></div>
+  <div class="content">
+    <div class="quote-block">
+      <div id="quote">“Loading quote...”</div>
     </div>
-  </header>
 
-  <main>
-    <div class="goal-container">
-      <h2>Set Your Goal</h2>
-      <input type="text" id="goalInput" placeholder="Enter your goal..." />
-      <button class="set-goal-btn" onclick="saveGoal()">Set Goal</button>
-      <div id="goalDisplay" class="goal-display">Not completed</div>
-      <button class="done-btn" onclick="markDone()">Mark as Done</button>
-      <div id="streakDisplay" class="streak-display">🔥 Streak: 0 days</div>
+    <div class="goal-section">
+      <div class="streak" id="streakDisplay">🔥 Streak: 0 days</div>
+      <input type="text" id="goalInput" placeholder="Set your daily goal..." />
+      <button onclick="saveGoal()">Set Goal</button>
+      <div class="goal-display" id="goalDisplay"></div>
+      <button class="done" onclick="markDone()">Mark as Done ✅</button>
     </div>
-  </main>
+  </div>
+
+  <script src="quotes.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
