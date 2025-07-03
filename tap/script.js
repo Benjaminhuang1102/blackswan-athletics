@@ -1,48 +1,56 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const goalInput = document.getElementById("goalInput");
-  const goalDisplay = document.getElementById("goalDisplay");
-  const streakDisplay = document.getElementById("streakDisplay");
-  const quoteText = document.getElementById("quoteText");
-  const quoteAuthor = document.getElementById("quoteAuthor");
+// File: tap/script.js
+document.addEventListener("DOMContentLoaded", function () {
+  const quoteEl = document.getElementById("quote");
+  const authorEl = document.getElementById("author");
+  const { text, author } = getQuoteOfTheDay();
+  quoteEl.textContent = `"${text}"`;
+  authorEl.textContent = `— ${author}`;
 
-  // Quote
-  const quote = getQuoteOfTheDay();
-  quoteText.textContent = `"${quote.text}"`;
-  quoteAuthor.textContent = `– ${quote.author}`;
+  // Set background
+  const dayIndex = new Date().getDate() % backgroundImages.length;
+  document.querySelector(".hero").style.backgroundImage = `url('${backgroundImages[dayIndex]}')`;
 
-  // Load saved goal
-  const savedGoal = localStorage.getItem("dailyGoal");
-  const isDone = localStorage.getItem("goalDone") === "true";
-  if (savedGoal) {
-    goalDisplay.textContent = isDone ? `✅ ${savedGoal}` : `📌 ${savedGoal}`;
+  // Goal logic
+  const today = new Date().toISOString().split("T")[0];
+  const saved = JSON.parse(localStorage.getItem("goalData")) || {};
+  if (saved[today]) {
+    document.getElementById("goalDisplay").textContent = `Today: ${saved[today].goal}`;
+    document.getElementById("goalStatus").textContent = saved[today].done ? "✅ Goal completed!" : "❌ Goal not completed.";
   }
-
-  // Load streak
-  const streak = parseInt(localStorage.getItem("streak") || "0");
-  streakDisplay.textContent = `🔥 Streak: ${streak} days`;
+  updateStreak(saved);
 });
 
 function saveGoal() {
   const input = document.getElementById("goalInput").value;
-  if (input.trim()) {
-    localStorage.setItem("dailyGoal", input);
-    localStorage.setItem("goalDone", "false");
-    document.getElementById("goalDisplay").textContent = `📌 ${input}`;
-  }
+  if (!input) return;
+  const today = new Date().toISOString().split("T")[0];
+  const saved = JSON.parse(localStorage.getItem("goalData")) || {};
+  saved[today] = { goal: input, done: false };
+  localStorage.setItem("goalData", JSON.stringify(saved));
+  document.getElementById("goalDisplay").textContent = `Today: ${input}`;
+  document.getElementById("goalStatus").textContent = "❌ Goal not completed.";
 }
 
 function markDone() {
-  const savedGoal = localStorage.getItem("dailyGoal");
-  if (!savedGoal) return;
+  const today = new Date().toISOString().split("T")[0];
+  const saved = JSON.parse(localStorage.getItem("goalData")) || {};
+  if (saved[today]) {
+    saved[today].done = true;
+    localStorage.setItem("goalData", JSON.stringify(saved));
+    document.getElementById("goalStatus").textContent = "✅ Goal completed!";
+    updateStreak(saved);
+  }
+}
 
-  if (localStorage.getItem("goalDone") === "true") return;
-
-  localStorage.setItem("goalDone", "true");
-  document.getElementById("goalDisplay").textContent = `✅ ${savedGoal}`;
-
-  // Update streak
-  let streak = parseInt(localStorage.getItem("streak") || "0");
-  streak += 1;
-  localStorage.setItem("streak", streak);
-  document.getElementById("streakDisplay").textContent = `🔥 Streak: ${streak} days`;
+function updateStreak(data) {
+  const today = new Date();
+  let streak = 0;
+  for (let i = 0; i < 365; i++) {
+    const d = new Date(today);
+    d.setDate(d.getDate() - i);
+    const key = d.toISOString().split("T")[0];
+    if (data[key]?.done) streak++;
+    else break;
+  }
+  document.getElementById("streakDisplay").textContent = `🔥 Streak: ${streak} day${streak !== 1 ? "s" : ""}`;
 }
