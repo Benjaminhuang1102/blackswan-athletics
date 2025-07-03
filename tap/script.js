@@ -1,52 +1,113 @@
-<script>
-  const quotes = [
-    "You miss 100% of the shots you don’t take.",
-    "Champions keep playing until they get it right.",
-    "Hard work beats talent when talent doesn’t work hard.",
-    "It’s not whether you get knocked down; it’s whether you get up.",
-    "The difference between the impossible and the possible lies in a person’s determination.",
-    "Success isn’t owned. It’s leased. And rent is due every day.",
-    "Do something today that your future self will thank you for."
-  ];
-  const authors = [
-    "Wayne Gretzky",
-    "Billie Jean King",
-    "Tim Notke",
-    "Vince Lombardi",
-    "Tommy Lasorda",
-    "J.J. Watt",
-    "Sean Patrick Flanery"
-  ];
+// Utility: Get day of year
+function getDayOfYear(date = new Date()) {
+  const start = new Date(date.getFullYear(), 0, 0);
+  const diff = date - start + ((start.getTimezoneOffset() - date.getTimezoneOffset()) * 60 * 1000);
+  return Math.floor(diff / (1000 * 60 * 60 * 24));
+}
 
-  const backgroundImages = [
-    "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=720&q=80",
-    "https://images.unsplash.com/photo-1605296867304-46d5465a13f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=720&q=80",
-    "https://images.unsplash.com/photo-1614284477357-7b7a0e5479f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=720&q=80",
-    "https://images.unsplash.com/photo-1546484959-f676d97f5d5b?ixlib=rb-4.0.3&auto=format&fit=crop&w=720&q=80",
-    "https://images.unsplash.com/photo-1603297621325-14c2ba2f3d07?ixlib=rb-4.0.3&auto=format&fit=crop&w=720&q=80"
-  ];
+// Display Quote of the Day
+function displayQuote() {
+  const quoteDiv = document.getElementById('quote');
+  const authorDiv = document.getElementById('author');
+  const dayIndex = getDayOfYear() % quotes.length;
 
-  function getDayOfYear() {
-    const now = new Date();
-    const start = new Date(now.getFullYear(), 0, 0);
-    const diff = now - start;
-    return Math.floor(diff / (1000 * 60 * 60 * 24));
+  const [quoteText, authorText] = quotes[dayIndex].split(' – ');
+  quoteDiv.textContent = `“${quoteText.trim()}”`;
+  authorDiv.textContent = `– ${authorText?.trim() || 'Unknown'}`;
+
+  // Auto resize quote font based on length
+  const length = quoteText.length;
+  if (length > 160) {
+    quoteDiv.style.fontSize = "1.4rem";
+  } else if (length > 100) {
+    quoteDiv.style.fontSize = "1.6rem";
+  } else {
+    quoteDiv.style.fontSize = "1.9rem";
+  }
+}
+
+// Goal + Streak Logic
+function setupGoalSystem() {
+  const goalInput = document.getElementById('goalInput');
+  const goalDisplay = document.getElementById('goalDisplay');
+  const streakDisplay = document.getElementById('streakDisplay');
+  const setBtn = document.getElementById('setGoalBtn');
+  const doneBtn = document.getElementById('doneBtn');
+  const today = new Date().toISOString().slice(0, 10);
+
+  function updateUI() {
+    const savedGoal = localStorage.getItem('dailyGoal');
+    const savedDate = localStorage.getItem('goalDate');
+    const savedDone = localStorage.getItem('goalDone');
+    const streak = localStorage.getItem('streak') || 0;
+
+    if (savedDate === today && savedGoal) {
+      goalDisplay.textContent = `"${savedGoal}"`;
+    } else {
+      goalDisplay.textContent = "No goal set for today.";
+    }
+
+    if (savedDate === today && savedDone === "true") {
+      doneBtn.textContent = "✅ Completed";
+      doneBtn.disabled = true;
+    } else {
+      doneBtn.textContent = "Mark as Done ✅";
+      doneBtn.disabled = false;
+    }
+
+    streakDisplay.textContent = `🔥 Streak: ${streak} days`;
   }
 
-  function displayQuoteAndBackground() {
-    const dayIndex = getDayOfYear() % quotes.length;
-
-    // Set background image
-    const hero = document.getElementById("hero");
-    hero.style.backgroundImage = `url('${backgroundImages[dayIndex % backgroundImages.length]}')`;
-
-    // Set quote text and author
-    document.getElementById("quoteText").textContent = `“${quotes[dayIndex]}”`;
-    document.getElementById("quoteAuthor").textContent = `– ${authors[dayIndex]}`;
+  function saveGoal() {
+    const goal = goalInput.value.trim();
+    if (goal) {
+      localStorage.setItem('dailyGoal', goal);
+      localStorage.setItem('goalDate', today);
+      localStorage.setItem('goalDone', 'false');
+      updateUI();
+    }
   }
 
-  // Run after DOM loads
-  document.addEventListener("DOMContentLoaded", () => {
-    displayQuoteAndBackground();
-  });
-</script>
+  function markDone() {
+    const savedDate = localStorage.getItem('goalDate');
+    const savedDone = localStorage.getItem('goalDone');
+    if (savedDate === today && savedDone !== "true") {
+      localStorage.setItem('goalDone', 'true');
+
+      let streak = parseInt(localStorage.getItem('streak') || '0');
+      streak++;
+      localStorage.setItem('streak', streak);
+
+      launchConfetti();
+      updateUI();
+    }
+  }
+
+  setBtn.addEventListener('click', saveGoal);
+  doneBtn.addEventListener('click', markDone);
+  updateUI();
+}
+
+// Confetti Celebration (simple emoji burst)
+function launchConfetti() {
+  const burst = document.createElement('div');
+  burst.style.position = 'fixed';
+  burst.style.bottom = '20px';
+  burst.style.left = '50%';
+  burst.style.transform = 'translateX(-50%)';
+  burst.style.fontSize = '2rem';
+  burst.style.zIndex = '1000';
+  burst.innerHTML = '🎉 🎊 💪 🎯 🎉';
+
+  document.body.appendChild(burst);
+
+  setTimeout(() => {
+    burst.remove();
+  }, 3000);
+}
+
+// Init all on page load
+document.addEventListener('DOMContentLoaded', () => {
+  displayQuote();
+  setupGoalSystem();
+});
