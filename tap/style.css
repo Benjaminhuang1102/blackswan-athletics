@@ -1,0 +1,96 @@
+body {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  color: white;
+  background: black;
+  overflow-x: hidden;
+}
+
+.logo {
+  max-width: 140px;
+  margin-top: 20px;
+}
+
+.quote-section {
+  position: relative;
+  text-align: center;
+  padding: 20px;
+  background: url("https://images.unsplash.com/photo-1600488995262-02e5ec8b3c6b") no-repeat center center/cover;
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.image-gradient {
+  position: absolute;
+  bottom: 0;
+  height: 40%;
+  width: 100%;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, black 100%);
+}
+
+.quote-container {
+  position: relative;
+  z-index: 2;
+  margin-bottom: 40px;
+}
+
+.quote-text {
+  font-size: 1.6rem;
+  font-style: italic;
+  line-height: 1.4;
+  padding: 0 20px;
+}
+
+.quote-author {
+  font-size: 1rem;
+  color: #aaa;
+  margin-top: 10px;
+}
+
+.goal-section {
+  padding: 30px 20px;
+  background-color: black;
+  text-align: center;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: none;
+  margin-bottom: 15px;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+button.set {
+  background-color: #007BFF;
+  color: white;
+}
+
+button.done {
+  background-color: #28a745;
+  color: white;
+}
+
+.goal-display {
+  margin-top: 20px;
+  font-size: 1.2rem;
+  color: #eee;
+}
+
+.streak {
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
