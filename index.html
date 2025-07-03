@@ -4,44 +4,30 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Black Swan Athletics</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&display=swap" rel="stylesheet"/>
-  <style>
-    body {
-      font-family: 'Montserrat', sans-serif;
-      background-color: #000;
-      color: white;
-      text-align: center;
-      padding: 40px;
-    }
-    .logo {
-      width: 150px;
-      margin-bottom: 20px;
-    }
-    h1 {
-      font-size: 2.5rem;
-      font-weight: 800;
-    }
-    .tagline {
-      color: #6f42c1;
-      font-size: 1.2rem;
-      margin: 10px 0 30px;
-    }
-    a.cta {
-      display: inline-block;
-      background: #6f42c1;
-      color: white;
-      padding: 15px 30px;
-      font-weight: bold;
-      border-radius: 30px;
-      text-decoration: none;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&display=swap" rel="stylesheet">
 </head>
 <body>
-  <img src="assets/logo-white.png" alt="Logo" class="logo"/>
-  <h1>Black Swan Athletics</h1>
-  <div class="tagline">Train Different.</div>
-  <p>Tap in. Set goals. Stay consistent.</p>
-  <a href="tap/" class="cta">Enter</a>
+  <div class="hero">
+    <img src="assets/Black Swan Athletics Logo" alt="Black Swan Logo" class="logo"/>
+    <div class="overlay"></div>
+    <div class="quote-container">
+      <div id="quoteText" class="quote-text">Loading quote...</div>
+      <div id="quoteAuthor" class="quote-author"></div>
+    </div>
+  </div>
+
+  <div class="tracker-section">
+    <h1>Today's Goal</h1>
+    <div class="streak" id="streakDisplay">🔥 Streak: 0 days</div>
+    <input type="text" id="goalInput" placeholder="Set your daily goal..." />
+    <button onclick="saveGoal()">Set Goal</button>
+    <div id="goalDisplay"></div>
+    <button class="done" onclick="markDone()">Mark as Done ✅</button>
+  </div>
+
+  <script src="tap/quotes.js"></script>
+  <script src="tap/script.js"></script>
+  <script src="images.js"></script>
 </body>
 </html>
