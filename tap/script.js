@@ -1,120 +1,89 @@
+// Quote loading logic (uses quotes.js arrays)
 function getQuoteOfTheDay() {
   const today = new Date();
   const start = new Date(today.getFullYear(), 0, 0);
-  const diff = today - start;
+  const diff = today - start + ((start.getTimezoneOffset() - today.getTimezoneOffset()) * 60 * 1000);
   const oneDay = 1000 * 60 * 60 * 24;
   const dayOfYear = Math.floor(diff / oneDay);
   const index = dayOfYear % quotes.length;
-
-  return {
-    text: quotes[index],
-    author: authors[index]
-  };
+  return { text: quotes[index], author: authors[index] };
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  const goalInput = document.getElementById("goalInput");
-  const goalDisplay = document.getElementById("goalDisplay");
-  const streakDisplay = document.getElementById("streakDisplay");
-  const quoteDiv = document.getElementById("quote");
-  const authorDiv = document.getElementById("author");
-  const today = new Date().toISOString().slice(0, 10);
+// DOM elements
+const goalInput = document.getElementById('goalInput');
+const goalDisplay = document.getElementById('goalDisplay');
+const streakDisplay = document.getElementById('streakDisplay');
+const quoteText = document.getElementById('quoteText');
+const quoteAuthor = document.getElementById('quoteAuthor');
+const today = new Date().toISOString().slice(0, 10);
 
-  function displayQuote() {
-    const dailyQuote = getQuoteOfTheDay();
-    quoteDiv.textContent = `"${dailyQuote.text}"`;
-    authorDiv.textContent = `– ${dailyQuote.author}`;
-
-    const length = dailyQuote.text.length;
-    if (length > 140) {
-      quoteDiv.style.fontSize = "1.2rem";
-    } else if (length > 100) {
-      quoteDiv.style.fontSize = "1.6rem";
-    } else {
-      quoteDiv.style.fontSize = "2rem";
-    }
+// Save goal
+function saveGoal() {
+  const goal = goalInput.value.trim();
+  if (goal) {
+    localStorage.setItem('dailyGoal', goal);
+    localStorage.setItem('goalDate', today);
+    localStorage.setItem('goalDone', 'false');
+    displayGoal();
   }
+}
 
-  function saveGoal() {
-    const goal = goalInput.value.trim();
-    if (goal) {
-      localStorage.setItem("dailyGoal", goal);
-      localStorage.setItem("goalDate", today);
-      localStorage.setItem("goalDone", "false");
-      displayGoal();
-    }
-  }
+// Confetti function
+function launchConfetti() {
+  const confettiScript = document.createElement('script');
+  confettiScript.src = "https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js";
+  confettiScript.onload = () => {
+    confetti({
+      particleCount: 100,
+      spread: 80,
+      origin: { y: 1.0 }
+    });
+  };
+  document.body.appendChild(confettiScript);
+}
 
-  function markDone() {
-    if (localStorage.getItem("goalDate") === today && localStorage.getItem("goalDone") !== "true") {
-      localStorage.setItem("goalDone", "true");
-      let streak = parseInt(localStorage.getItem("streak") || "0") + 1;
-      localStorage.setItem("streak", streak);
-      streakDisplay.textContent = `🔥 Streak: ${streak} days`;
-      showConfetti();
-    }
-  }
-
-  function displayGoal() {
-    const savedGoal = localStorage.getItem("dailyGoal");
-    const savedDate = localStorage.getItem("goalDate");
-    const goalDone = localStorage.getItem("goalDone");
-    const streak = localStorage.getItem("streak") || 0;
-
-    if (savedDate === today && savedGoal) {
-      goalDisplay.textContent = `"${savedGoal}" – ${goalDone === "true" ? "✅ Completed" : "❌ Not completed"}`;
-    } else {
-      goalDisplay.textContent = "No goal set for today.";
-    }
-
+// Mark goal as done
+function markDone() {
+  if (localStorage.getItem('goalDate') === today && localStorage.getItem('goalDone') !== 'true') {
+    localStorage.setItem('goalDone', 'true');
+    let streak = parseInt(localStorage.getItem('streak') || '0') + 1;
+    localStorage.setItem('streak', streak);
     streakDisplay.textContent = `🔥 Streak: ${streak} days`;
+    launchConfetti();
+  }
+}
+
+// Display goal
+function displayGoal() {
+  const savedGoal = localStorage.getItem('dailyGoal');
+  const savedDate = localStorage.getItem('goalDate');
+  const isDone = localStorage.getItem('goalDone') === 'true';
+  const streak = localStorage.getItem('streak') || 0;
+
+  if (savedDate === today && savedGoal) {
+    goalDisplay.textContent = `"${savedGoal}"`;
+  } else {
+    goalDisplay.textContent = "No goal set for today.";
   }
 
-  function showConfetti() {
-    const confettiContainer = document.createElement("div");
-    confettiContainer.style.position = "fixed";
-    confettiContainer.style.bottom = "0";
-    confettiContainer.style.left = "0";
-    confettiContainer.style.width = "100%";
-    confettiContainer.style.height = "100vh";
-    confettiContainer.style.pointerEvents = "none";
-    confettiContainer.style.zIndex = "9999";
+  streakDisplay.textContent = `🔥 Streak: ${streak} days`;
+}
 
-    document.body.appendChild(confettiContainer);
+// On load: set quote and goal
+document.addEventListener("DOMContentLoaded", () => {
+  const quote = getQuoteOfTheDay();
+  quoteText.textContent = `"${quote.text}"`;
+  quoteAuthor.textContent = `– ${quote.author}`;
 
-    for (let i = 0; i < 100; i++) {
-      const confetti = document.createElement("div");
-      confetti.style.position = "absolute";
-      confetti.style.width = "10px";
-      confetti.style.height = "10px";
-      confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
-      confetti.style.left = `${Math.random() * 100}%`;
-      confetti.style.bottom = "0";
-      confetti.style.opacity = "0.9";
-      confetti.style.borderRadius = "50%";
-      confetti.style.animation = `confettiFall ${1 + Math.random() * 2}s ease-out forwards`;
-      confettiContainer.appendChild(confetti);
-    }
-
-    const style = document.createElement("style");
-    style.textContent = `
-      @keyframes confettiFall {
-        0% { transform: translateY(0); }
-        100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
-      }
-    `;
-    document.head.appendChild(style);
-
-    setTimeout(() => {
-      confettiContainer.remove();
-      style.remove();
-    }, 3000);
+  // Font size adjustment
+  const len = quote.text.length;
+  if (len > 120) {
+    quoteText.style.fontSize = "1rem";
+  } else if (len > 80) {
+    quoteText.style.fontSize = "1.3rem";
+  } else {
+    quoteText.style.fontSize = "1.6rem";
   }
 
-  // Attach functions to global scope
-  window.saveGoal = saveGoal;
-  window.markDone = markDone;
-
-  displayQuote();
   displayGoal();
 });
