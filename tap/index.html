@@ -3,152 +3,221 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Daily Motivation - Black Swan Athletics</title>
+  <title>Black Swan | Daily Goal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&display=swap" rel="stylesheet" />
   <style>
-    /* Reset & basics */
-    body, html {
-      margin: 0; padding: 0; height: 100%;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      color: white;
-      background-color: black;
-      overflow-x: hidden;
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
     }
-
-    /* Container with background image */
-    #background {
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 55vh;
-      background-position: center;
-      background-repeat: no-repeat;
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: url('https://images.unsplash.com/photo-1600488995262-02e5ec8b3c6b?auto=format&fit=crop&w=800&q=80') no-repeat center top;
       background-size: cover;
-      filter: brightness(0.4);
-      z-index: -1;
-    }
-
-    /* Gradient fade under the image */
-    #gradientFade {
-      position: fixed;
-      top: 55vh; left: 0; width: 100%; height: 45vh;
-      background: linear-gradient(to bottom, rgba(0,0,0,0), #000);
-      z-index: -1;
-    }
-
-    /* Quote container */
-    #quoteContainer {
-      padding: 1rem 1.5rem 0 1.5rem;
-      height: 55vh;
+      color: #fff;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
-      justify-content: flex-end;
+      justify-content: flex-start;
+      align-items: center;
+      padding: 20px 15px 50px;
+      position: relative;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 55vh;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.85) 40%, rgba(0,0,0,0) 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .content {
+      position: relative;
+      z-index: 1;
+      max-width: 600px;
+      width: 100%;
+      margin-top: 15vh;
+    }
+    h1 {
+      font-size: 2.5rem;
+      color: #ffae00;
+      margin-bottom: 10px;
       text-align: center;
     }
-
-    #quoteText {
-      font-size: 1.6rem;
+    .quote {
+      font-style: italic;
+      margin-bottom: 10px;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+      line-height: 1.4;
+      text-align: center;
+      color: #f0f0f0;
       font-weight: 600;
-      line-height: 1.3;
-      margin-bottom: 0.4rem;
-      text-shadow: 0 0 5px rgba(0,0,0,0.8);
+      /* dynamic font sizing handled in script */
     }
-
-    #quoteAuthor {
-      font-size: 1.1rem;
-      font-weight: 400;
-      color: #aaa;
-      text-shadow: 0 0 5px rgba(0,0,0,0.8);
-    }
-
-    /* Goal input section */
-    #goalSection {
-      margin: 0 auto;
-      margin-top: 60vh;
-      max-width: 400px;
-      padding: 1rem;
+    .author {
+      color: #666;
+      font-weight: 500;
+      font-size: 0.9rem;
+      margin-bottom: 30px;
       text-align: center;
     }
-
     #goalInput {
       width: 100%;
-      padding: 12px;
-      font-size: 1rem;
-      border-radius: 8px;
+      padding: 15px;
+      font-size: 1.1rem;
       border: none;
-      margin-bottom: 12px;
-      box-sizing: border-box;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      outline: none;
     }
-
     button {
-      padding: 12px 20px;
-      margin: 5px;
-      font-size: 1rem;
+      width: 100%;
+      padding: 15px;
+      font-size: 1.1rem;
       border: none;
-      border-radius: 8px;
+      border-radius: 10px;
       cursor: pointer;
-      font-weight: 600;
+      background-color: #007bff;
       color: white;
-      background-color: #007BFF; /* Blue */
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
       transition: background-color 0.3s ease;
     }
-
     button:hover {
       background-color: #0056b3;
     }
-
+    .done {
+      margin-top: 15px;
+      background-color: #28a745;
+    }
     #goalDisplay {
-      margin-top: 20px;
-      font-size: 1.1rem;
-      font-style: italic;
-      min-height: 2em;
+      margin-top: 25px;
+      font-size: 1.2rem;
+      text-align: center;
+      min-height: 40px;
+      font-weight: 600;
+      color: #ddd;
     }
-
     #streakDisplay {
-      margin-top: 10px;
+      margin-top: 15px;
       font-size: 1.1rem;
+      text-align: center;
+      color: #ffae00;
+      font-weight: 700;
+      user-select: none;
     }
-
-    /* Responsive for phones */
     @media (max-width: 480px) {
-      #quoteText {
-        font-size: 1.3rem;
+      h1 {
+        font-size: 2rem;
       }
-      #quoteAuthor {
-        font-size: 0.9rem;
+      .quote {
+        font-size: 1.15rem;
       }
       #goalInput, button {
         font-size: 1rem;
-      }
-      #goalSection {
-        margin-top: 55vh;
-        padding: 1rem 0.5rem;
-        max-width: 90vw;
+        padding: 12px;
       }
     }
   </style>
 </head>
 <body>
+  <div class="content">
+    <h1>Daily Goal</h1>
+    <div class="quote" id="quote">Loading quote...</div>
+    <div class="author" id="author"></div>
 
-  <div id="background"></div>
-  <div id="gradientFade"></div>
+    <input type="text" id="goalInput" placeholder="Set your daily goal..." />
+    <button onclick="saveGoal()">Set Goal</button>
+    <button class="done" onclick="markDone()">Mark as Done ✅</button>
 
-  <div id="quoteContainer">
-    <div id="quoteText">Loading quote...</div>
-    <div id="quoteAuthor"></div>
-  </div>
-
-  <section id="goalSection">
-    <input type="text" id="goalInput" placeholder="Enter your daily goal..." />
-    <div>
-      <button id="saveGoalBtn">Set Goal</button>
-      <button id="markDoneBtn">Mark as Done</button>
-    </div>
     <div id="goalDisplay">No goal set for today.</div>
     <div id="streakDisplay">🔥 Streak: 0 days</div>
-  </section>
+  </div>
 
-  <!-- Load quotes and images -->
   <script src="quotes.js"></script>
-  <script src="images.js"></script>
-  <script src="script.js"></script>
+  <script>
+    // Helper to get day of year
+    function getDayOfYear(date) {
+      const start = new Date(date.getFullYear(), 0, 0);
+      const diff = date - start + ((start.getTimezoneOffset() - date.getTimezoneOffset()) * 60 * 1000);
+      return Math.floor(diff / (1000 * 60 * 60 * 24));
+    }
 
+    // Set quote and author based on day
+    function setQuote() {
+      const today = new Date();
+      const index = getDayOfYear(today) % quotes.length;
+      const quoteText = quotes[index];
+      const authorName = authors[index];
+
+      const quoteEl = document.getElementById('quote');
+      const authorEl = document.getElementById('author');
+
+      // Adjust font size based on length
+      if (quoteText.length < 70) {
+        quoteEl.style.fontSize = '1.5rem';
+      } else if (quoteText.length < 120) {
+        quoteEl.style.fontSize = '1.25rem';
+      } else {
+        quoteEl.style.fontSize = '1rem';
+      }
+
+      quoteEl.textContent = `"${quoteText}"`;
+      authorEl.textContent = `– ${authorName}`;
+    }
+
+    // Goal and streak logic
+    const goalInput = document.getElementById('goalInput');
+    const goalDisplay = document.getElementById('goalDisplay');
+    const streakDisplay = document.getElementById('streakDisplay');
+    const todayStr = new Date().toISOString().slice(0, 10);
+
+    function saveGoal() {
+      const goal = goalInput.value.trim();
+      if (goal) {
+        localStorage.setItem('dailyGoal', goal);
+        localStorage.setItem('goalDate', todayStr);
+        localStorage.setItem('goalDone', 'false');
+        displayGoal();
+      }
+    }
+
+    function markDone() {
+      if (localStorage.getItem('goalDate') === todayStr && localStorage.getItem('goalDone') !== 'true') {
+        localStorage.setItem('goalDone', 'true');
+        incrementStreak();
+        alert('Goal marked as done! Great work.');
+      }
+    }
+
+    function incrementStreak() {
+      let streak = parseInt(localStorage.getItem('streak') || '0');
+      streak++;
+      localStorage.setItem('streak', streak);
+      streakDisplay.textContent = `🔥 Streak: ${streak} days`;
+    }
+
+    function displayGoal() {
+      const savedGoal = localStorage.getItem('dailyGoal');
+      const savedDate = localStorage.getItem('goalDate');
+      const savedDone = localStorage.getItem('goalDone');
+      const streak = localStorage.getItem('streak') || 0;
+
+      if (savedDate === todayStr && savedGoal) {
+        goalDisplay.textContent = `"${savedGoal}"`;
+        goalDisplay.style.color = savedDone === 'true' ? '#28a745' : '#ddd';
+      } else {
+        goalDisplay.textContent = "No goal set for today.";
+        goalDisplay.style.color = '#ddd';
+      }
+      streakDisplay.textContent = `🔥 Streak: ${streak} days`;
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      setQuote();
+      displayGoal();
+    });
+  </script>
 </body>
 </html>
