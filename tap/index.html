@@ -2,222 +2,32 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Black Swan | Daily Goal</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&display=swap" rel="stylesheet" />
-  <style>
-    * {
-      margin: 0; padding: 0; box-sizing: border-box;
-    }
-    body {
-      font-family: 'Montserrat', sans-serif;
-      background: url('https://images.unsplash.com/photo-1600488995262-02e5ec8b3c6b?auto=format&fit=crop&w=800&q=80') no-repeat center top;
-      background-size: cover;
-      color: #fff;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items: center;
-      padding: 20px 15px 50px;
-      position: relative;
-      overflow-x: hidden;
-    }
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 55vh;
-      background: linear-gradient(to bottom, rgba(0,0,0,0.85) 40%, rgba(0,0,0,0) 100%);
-      pointer-events: none;
-      z-index: 0;
-    }
-    .content {
-      position: relative;
-      z-index: 1;
-      max-width: 600px;
-      width: 100%;
-      margin-top: 15vh;
-    }
-    h1 {
-      font-size: 2.5rem;
-      color: #ffae00;
-      margin-bottom: 10px;
-      text-align: center;
-    }
-    .quote {
-      font-style: italic;
-      margin-bottom: 10px;
-      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
-      line-height: 1.4;
-      text-align: center;
-      color: #f0f0f0;
-      font-weight: 600;
-      /* dynamic font sizing handled in script */
-    }
-    .author {
-      color: #666;
-      font-weight: 500;
-      font-size: 0.9rem;
-      margin-bottom: 30px;
-      text-align: center;
-    }
-    #goalInput {
-      width: 100%;
-      padding: 15px;
-      font-size: 1.1rem;
-      border: none;
-      border-radius: 10px;
-      margin-bottom: 20px;
-      outline: none;
-    }
-    button {
-      width: 100%;
-      padding: 15px;
-      font-size: 1.1rem;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      background-color: #007bff;
-      color: white;
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 700;
-      transition: background-color 0.3s ease;
-    }
-    button:hover {
-      background-color: #0056b3;
-    }
-    .done {
-      margin-top: 15px;
-      background-color: #28a745;
-    }
-    #goalDisplay {
-      margin-top: 25px;
-      font-size: 1.2rem;
-      text-align: center;
-      min-height: 40px;
-      font-weight: 600;
-      color: #ddd;
-    }
-    #streakDisplay {
-      margin-top: 15px;
-      font-size: 1.1rem;
-      text-align: center;
-      color: #ffae00;
-      font-weight: 700;
-      user-select: none;
-    }
-    @media (max-width: 480px) {
-      h1 {
-        font-size: 2rem;
-      }
-      .quote {
-        font-size: 1.15rem;
-      }
-      #goalInput, button {
-        font-size: 1rem;
-        padding: 12px;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="../style.css" />
+  <script defer src="../quotes.js"></script>
+  <script defer src="../images.js"></script>
+  <script defer src="script.js"></script>
 </head>
 <body>
-  <div class="content">
-    <h1>Daily Goal</h1>
-    <div class="quote" id="quote">Loading quote...</div>
-    <div class="author" id="author"></div>
+  <header class="hero">
+    <div class="overlay"></div>
+    <img src="../assets/Black Swan Athletics Logo.png" alt="Logo" class="logo" />
+    <div class="quote-container">
+      <div id="quote" class="quote-text">Loading...</div>
+      <div id="author" class="quote-author"></div>
+    </div>
+  </header>
 
-    <input type="text" id="goalInput" placeholder="Set your daily goal..." />
-    <button onclick="saveGoal()">Set Goal</button>
-    <button class="done" onclick="markDone()">Mark as Done ✅</button>
-
-    <div id="goalDisplay">No goal set for today.</div>
-    <div id="streakDisplay">🔥 Streak: 0 days</div>
-  </div>
-
-  <script src="quotes.js"></script>
-  <script>
-    // Helper to get day of year
-    function getDayOfYear(date) {
-      const start = new Date(date.getFullYear(), 0, 0);
-      const diff = date - start + ((start.getTimezoneOffset() - date.getTimezoneOffset()) * 60 * 1000);
-      return Math.floor(diff / (1000 * 60 * 60 * 24));
-    }
-
-    // Set quote and author based on day
-    function setQuote() {
-      const today = new Date();
-      const index = getDayOfYear(today) % quotes.length;
-      const quoteText = quotes[index];
-      const authorName = authors[index];
-
-      const quoteEl = document.getElementById('quote');
-      const authorEl = document.getElementById('author');
-
-      // Adjust font size based on length
-      if (quoteText.length < 70) {
-        quoteEl.style.fontSize = '1.5rem';
-      } else if (quoteText.length < 120) {
-        quoteEl.style.fontSize = '1.25rem';
-      } else {
-        quoteEl.style.fontSize = '1rem';
-      }
-
-      quoteEl.textContent = `"${quoteText}"`;
-      authorEl.textContent = `– ${authorName}`;
-    }
-
-    // Goal and streak logic
-    const goalInput = document.getElementById('goalInput');
-    const goalDisplay = document.getElementById('goalDisplay');
-    const streakDisplay = document.getElementById('streakDisplay');
-    const todayStr = new Date().toISOString().slice(0, 10);
-
-    function saveGoal() {
-      const goal = goalInput.value.trim();
-      if (goal) {
-        localStorage.setItem('dailyGoal', goal);
-        localStorage.setItem('goalDate', todayStr);
-        localStorage.setItem('goalDone', 'false');
-        displayGoal();
-      }
-    }
-
-    function markDone() {
-      if (localStorage.getItem('goalDate') === todayStr && localStorage.getItem('goalDone') !== 'true') {
-        localStorage.setItem('goalDone', 'true');
-        incrementStreak();
-        alert('Goal marked as done! Great work.');
-      }
-    }
-
-    function incrementStreak() {
-      let streak = parseInt(localStorage.getItem('streak') || '0');
-      streak++;
-      localStorage.setItem('streak', streak);
-      streakDisplay.textContent = `🔥 Streak: ${streak} days`;
-    }
-
-    function displayGoal() {
-      const savedGoal = localStorage.getItem('dailyGoal');
-      const savedDate = localStorage.getItem('goalDate');
-      const savedDone = localStorage.getItem('goalDone');
-      const streak = localStorage.getItem('streak') || 0;
-
-      if (savedDate === todayStr && savedGoal) {
-        goalDisplay.textContent = `"${savedGoal}"`;
-        goalDisplay.style.color = savedDone === 'true' ? '#28a745' : '#ddd';
-      } else {
-        goalDisplay.textContent = "No goal set for today.";
-        goalDisplay.style.color = '#ddd';
-      }
-      streakDisplay.textContent = `🔥 Streak: ${streak} days`;
-    }
-
-    // Initialize
-    document.addEventListener('DOMContentLoaded', () => {
-      setQuote();
-      displayGoal();
-    });
-  </script>
+  <main>
+    <div class="goal-container">
+      <h2>Set Your Goal</h2>
+      <input type="text" id="goalInput" placeholder="Enter your goal..." />
+      <button class="set-goal-btn" onclick="saveGoal()">Set Goal</button>
+      <div id="goalDisplay" class="goal-display">Not completed</div>
+      <button class="done-btn" onclick="markDone()">Mark as Done</button>
+      <div id="streakDisplay" class="streak-display">🔥 Streak: 0 days</div>
+    </div>
+  </main>
 </body>
 </html>
