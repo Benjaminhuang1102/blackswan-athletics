@@ -2,28 +2,32 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Black Swan Athletics</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Black Swan | Daily Goal</title>
   <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&display=swap" rel="stylesheet">
-  <script src="tap/images.js" defer></script>
-  <script src="tap/quotes.js" defer></script>
-  <script src="tap/landing.js" defer></script>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&family=Great+Vibes&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+  <script defer src="tap/images.js"></script>
+  <script defer src="tap/quotes.js"></script>
+  <script defer src="tap/script.js"></script>
 </head>
 <body>
   <div class="hero" id="hero">
-    <img src="assets/Black Swan Athletics Logo" alt="Black Swan Logo" class="logo" />
+    <img src="assets/Black Swan Athletics Logo.png" alt="Logo" class="logo" />
     <div class="quote-box">
-      <div class="quote-text" id="quote">Loading quote...</div>
-      <div class="quote-author" id="author"></div>
+      <div id="quote" class="quote-text">Loading quote...</div>
+      <div id="author" class="quote-author"></div>
     </div>
     <div class="scroll-down">↓</div>
   </div>
 
-  <div class="container center-btn">
-    <a href="tap/index.html">
-      <button class="go-button">Go to Goal Tracker</button>
-    </a>
+  <div class="tracker-section">
+    <h1>Today's Goal</h1>
+    <div class="streak" id="streakDisplay">🔥 Streak: 0 days</div>
+    <input type="text" id="goalInput" placeholder="Set your goal for today..." />
+    <button id="saveBtn">Set Goal</button>
+    <div id="goalDisplay" class="goal-display">No goal set.</div>
+    <button id="doneBtn" class="done">Mark as Done ✅</button>
   </div>
 </body>
 </html>
