@@ -4,30 +4,26 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Black Swan Athletics</title>
-  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&display=swap" rel="stylesheet">
+  <script src="tap/images.js" defer></script>
+  <script src="tap/quotes.js" defer></script>
+  <script src="tap/landing.js" defer></script>
 </head>
 <body>
-  <div class="hero">
-    <img src="assets/Black Swan Athletics Logo" alt="Black Swan Logo" class="logo"/>
-    <div class="overlay"></div>
-    <div class="quote-container">
-      <div id="quoteText" class="quote-text">Loading quote...</div>
-      <div id="quoteAuthor" class="quote-author"></div>
+  <div class="hero" id="hero">
+    <img src="assets/Black Swan Athletics Logo" alt="Black Swan Logo" class="logo" />
+    <div class="quote-box">
+      <div class="quote-text" id="quote">Loading quote...</div>
+      <div class="quote-author" id="author"></div>
     </div>
+    <div class="scroll-down">↓</div>
   </div>
 
-  <div class="tracker-section">
-    <h1>Today's Goal</h1>
-    <div class="streak" id="streakDisplay">🔥 Streak: 0 days</div>
-    <input type="text" id="goalInput" placeholder="Set your daily goal..." />
-    <button onclick="saveGoal()">Set Goal</button>
-    <div id="goalDisplay"></div>
-    <button class="done" onclick="markDone()">Mark as Done ✅</button>
+  <div class="container">
+    <a href="tap/index.html">
+      <button>Go to Goal Tracker</button>
+    </a>
   </div>
-
-  <script src="tap/quotes.js"></script>
-  <script src="tap/script.js"></script>
-  <script src="images.js"></script>
 </body>
 </html>
