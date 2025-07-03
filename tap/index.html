@@ -1,28 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Daily Goal – Black Swan</title>
-  <link rel="stylesheet" href="style.css"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Black Swan | Daily Goal</title>
+  <link rel="stylesheet" href="../style.css">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&display=swap" rel="stylesheet">
 </head>
-<body>
-  <div class="overlay"></div>
-  <div class="content">
-    <div class="quote-block">
-      <div id="quote">“Loading quote...”</div>
-    </div>
-
-    <div class="goal-section">
-      <div class="streak" id="streakDisplay">🔥 Streak: 0 days</div>
-      <input type="text" id="goalInput" placeholder="Set your daily goal..." />
-      <button onclick="saveGoal()">Set Goal</button>
-      <div class="goal-display" id="goalDisplay"></div>
-      <button class="done" onclick="markDone()">Mark as Done ✅</button>
-    </div>
+<body class="tracker">
+  <div class="container">
+    <h1>Today's Goal</h1>
+    <div class="streak" id="streakDisplay">🔥 Streak: 0 days</div>
+    <input type="text" id="goalInput" placeholder="Set your daily goal..." />
+    <button onclick="saveGoal()">Set Goal</button>
+    <div id="goalDisplay"></div>
+    <button class="done" onclick="markDone()">Mark as Done ✅</button>
+    <div id="quote">Loading quote...</div>
   </div>
-
   <script src="quotes.js"></script>
   <script src="script.js"></script>
 </body>
