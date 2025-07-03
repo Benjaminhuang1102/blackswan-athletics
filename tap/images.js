@@ -32,3 +32,10 @@ const backgroundImages = [
   "https://source.unsplash.com/720x1280/?sunset,trail",
   "https://source.unsplash.com/720x1280/?grind,mountain"
 ];
+
+document.addEventListener('DOMContentLoaded', () => {
+  const hero = document.getElementById('hero');
+  const today = new Date();
+  const index = (today.getDate() + today.getMonth()) % backgroundImages.length;
+  hero.style.backgroundImage = `url('${backgroundImages[index]}')`;
+});
