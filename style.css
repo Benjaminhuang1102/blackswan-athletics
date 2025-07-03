@@ -1,0 +1,151 @@
+/* Reset and global font */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  line-height: 1.5;
+  background-color: #000;
+  color: white;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Landing page styling */
+body.landing {
+  text-align: center;
+  padding: 20px;
+}
+
+.logo {
+  width: 160px;
+  margin-bottom: 20px;
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 10px;
+}
+
+.tagline {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #a94eff;
+  margin-bottom: 30px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+p {
+  font-size: 1.2rem;
+  color: #dddddd;
+  max-width: 600px;
+  margin-bottom: 30px;
+}
+
+.cta-button {
+  background-color: #a94eff;
+  color: white;
+  padding: 14px 36px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 40px;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: 0 8px 20px rgba(169, 78, 255, 0.3);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cta-button:hover {
+  background-color: #7b38c0;
+  box-shadow: 0 12px 24px rgba(123, 56, 192, 0.4);
+}
+
+footer {
+  margin-top: 60px;
+  font-size: 0.85rem;
+  color: #888;
+}
+
+/* Goal tracker (tap/index.html) */
+body.goal-page {
+  background: url('https://images.unsplash.com/photo-1518611012118-f0c5eeea2dba?auto=format&fit=crop&w=1400&q=80') no-repeat center center fixed;
+  background-size: cover;
+  position: relative;
+  padding: 20px;
+  color: #fff;
+}
+
+body.goal-page::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 0;
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  max-width: 600px;
+  padding: 2rem;
+}
+
+h1 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  background-color: #a94eff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+button.done {
+  background-color: #00c853;
+}
+
+.streak {
+  font-size: 1rem;
+  margin-bottom: 20px;
+  color: #ffae00;
+}
+
+.goal-display {
+  margin-top: 20px;
+  font-size: 1.2rem;
+}
+
+.quote {
+  font-size: 1.8rem;
+  font-style: italic;
+  margin-top: 30px;
+  color: #e0e0e0;
+}
