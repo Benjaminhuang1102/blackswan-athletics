@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Black Swan Athletics</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&display=swap" rel="stylesheet">
+  <script src="tap/images.js" defer></script>
+  <script src="tap/quotes.js" defer></script>
+  <script src="tap/landing.js" defer></script>
+</head>
+<body>
+  <div class="hero" id="hero">
+    <img src="assets/Black Swan Athletics Logo" alt="Black Swan Logo" class="logo" />
+    <div class="quote-box">
+      <div class="quote-text" id="quote">Loading quote...</div>
+      <div class="quote-author" id="author"></div>
+    </div>
+    <div class="scroll-down">↓</div>
+  </div>
+
+  <div class="container center-btn">
+    <a href="tap/index.html">
+      <button class="go-button">Go to Goal Tracker</button>
+    </a>
+  </div>
+</body>
+</html>
