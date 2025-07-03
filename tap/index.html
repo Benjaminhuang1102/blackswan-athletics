@@ -1,13 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Black Swan | Daily Goal</title>
-  <link rel="stylesheet" href="../style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&display=swap" rel="stylesheet" />
+  <!-- Add canvas-confetti from CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 <body class="tracker">
+  <div id="quote-container">
+    <div id="quote-text">Loading quote...</div>
+    <div id="quote-author"></div>
+  </div>
+
   <div class="container">
     <h1>Today's Goal</h1>
     <div class="streak" id="streakDisplay">🔥 Streak: 0 days</div>
@@ -15,8 +22,8 @@
     <button onclick="saveGoal()">Set Goal</button>
     <div id="goalDisplay"></div>
     <button class="done" onclick="markDone()">Mark as Done ✅</button>
-    <div id="quote">Loading quote...</div>
   </div>
+
   <script src="quotes.js"></script>
   <script src="script.js"></script>
 </body>
