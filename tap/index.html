@@ -1,31 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Black Swan | Daily Goal</title>
-  <link rel="stylesheet" href="../style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&display=swap" rel="stylesheet" />
 </head>
 <body class="tracker">
-  <div class="background-image" id="background"></div>
-  <img src="../assets/Black Swan Athletics Logo" class="corner-logo" alt="Black Swan Logo" />
-
-  <div class="top-section">
-    <div class="quote-wrapper">
-      <div class="quote-text" id="quote">Loading quote...</div>
-      <div class="quote-author" id="author"></div>
+  <!-- Header with background image and quote -->
+  <div class="header" id="quoteSection">
+    <div class="logo-overlay">
+      <img src="../assets/Black Swan Athletics Logo.png" alt="Logo" class="faint-logo" />
     </div>
+    <div class="quote-text" id="quoteText">Loading quote...</div>
+    <div class="quote-author" id="quoteAuthor"></div>
   </div>
 
-  <div class="container goal-section">
+  <!-- Goal tracking section -->
+  <div class="container">
     <h1>Today's Goal</h1>
     <div class="streak" id="streakDisplay">🔥 Streak: 0 days</div>
     <input type="text" id="goalInput" placeholder="Set your daily goal..." />
     <button onclick="saveGoal()">Set Goal</button>
     <div id="goalDisplay"></div>
     <button class="done" onclick="markDone()">Mark as Done ✅</button>
+    <div class="goal-status" id="goalStatus"></div>
   </div>
+
+  <!-- Confetti effect -->
+  <div id="confetti" class="confetti" style="display: none;"></div>
 
   <script src="quotes.js"></script>
   <script src="images.js"></script>
