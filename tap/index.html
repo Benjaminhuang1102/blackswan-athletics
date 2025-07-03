@@ -1,157 +1,127 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Black Swan | Daily Grind</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Black Swan | Daily Goal</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    :root {
+      --fade-height: 50vh;
     }
-
     body {
+      margin: 0;
       font-family: 'Montserrat', sans-serif;
       background: black;
-      color: white;
+      color: #fff;
       overflow-x: hidden;
     }
 
     .hero {
       position: relative;
       height: 100vh;
-      width: 100%;
-      overflow: hidden;
+      background: no-repeat center center/cover;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      text-align: center;
     }
 
     .hero::before {
       content: "";
       position: absolute;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 100%;
-      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6) 60%, black 100%);
-      z-index: 2;
-    }
-
-    .hero img {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+      inset: 0;
+      background-image: linear-gradient(to bottom, rgba(0,0,0,0) 50%, black 100%);
       z-index: 1;
     }
 
-    .quote-area {
+    .quote-box {
       position: relative;
-      z-index: 3;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 20px;
+      z-index: 2;
+      padding: 3rem 1.5rem 4rem;
     }
 
     .quote {
-      font-size: 2rem;
+      font-size: 1.5rem;
       font-style: italic;
-      color: #fff;
-      margin-bottom: 0.5rem;
-      padding: 0 10px;
+      line-height: 1.4;
     }
 
     .author {
-      font-size: 1rem;
+      margin-top: 0.8rem;
+      font-size: 0.9rem;
       color: #aaa;
     }
 
-    .content {
-      padding: 40px 20px;
-      max-width: 500px;
-      margin: 0 auto;
+    .goal-section {
+      background: black;
+      padding: 2rem 1rem 5rem;
       text-align: center;
     }
 
-    h1 {
-      font-size: 2.2rem;
-      margin-bottom: 10px;
-      color: #00bcd4;
-    }
-
-    .streak {
+    .goal-section input,
+    .goal-section button {
       font-size: 1rem;
-      margin-bottom: 20px;
-    }
-
-    input[type="text"] {
-      width: 100%;
-      padding: 14px;
-      font-size: 1rem;
-      border: none;
+      padding: 12px;
       border-radius: 8px;
-      margin-bottom: 15px;
-    }
-
-    button {
-      width: 100%;
-      padding: 14px;
-      font-size: 1rem;
       border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background 0.3s ease;
+      width: 100%;
+      margin-top: 0.8rem;
     }
 
-    #setGoalBtn {
-      background-color: #2196f3;
+    .goal-section input {
+      margin-bottom: 0.5rem;
+    }
+
+    .goal-section button.set {
+      background-color: #1e88e5;
       color: white;
-      margin-bottom: 10px;
     }
 
-    #setGoalBtn:hover {
-      background-color: #1976d2;
-    }
-
-    #doneBtn {
+    .goal-section button.done {
       background-color: #00c853;
       color: white;
     }
 
-    #doneBtn:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
+    .streak {
+      margin-top: 1rem;
+      color: #ffae00;
+      font-weight: bold;
     }
 
-    .goal-display {
-      font-size: 1.2rem;
-      margin-top: 15px;
-      color: #eee;
+    .logo {
+      display: flex;
+      justify-content: center;
+      padding-bottom: 1rem;
+      background: black;
+    }
+
+    .logo img {
+      width: 80px;
+      opacity: 0.85;
     }
   </style>
 </head>
 <body>
-  <div class="hero">
-    <img id="bgImage" src="" alt="Inspiration" />
-    <div class="quote-area">
-      <div id="quote" class="quote">Loading quote...</div>
-      <div id="author" class="author"></div>
+  <div class="hero" id="hero">
+    <div class="quote-box">
+      <div class="quote" id="quote">Loading quote...</div>
+      <div class="author" id="author"></div>
     </div>
   </div>
 
-  <div class="content">
-    <h1>Daily Goal</h1>
-    <div class="streak" id="streakDisplay">🔥 Streak: 0 days</div>
+  <div class="goal-section">
     <input type="text" id="goalInput" placeholder="Set your daily goal..." />
-    <button id="setGoalBtn">Set Goal</button>
-    <div class="goal-display" id="goalDisplay">No goal set for today.</div>
-    <button id="doneBtn">Mark as Done ✅</button>
+    <button class="set" onclick="saveGoal()">Set Goal</button>
+    <div class="goal-display" id="goalDisplay">Not completed.</div>
+    <button class="done" onclick="markDone()">Mark as Done ✅</button>
+    <div class="streak" id="streakDisplay">🔥 Streak: 0 days</div>
+  </div>
+
+  <div class="logo">
+    <img src="/logo_white.png" alt="Black Swan Logo" />
   </div>
 
   <script src="quotes.js"></script>
