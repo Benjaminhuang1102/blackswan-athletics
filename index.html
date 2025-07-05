@@ -2,34 +2,31 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Black Swan | Daily Goal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Motivation Band</title>
   <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&family=Great+Vibes&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
-  <script defer src="tap/images.js"></script>
-  <script defer src="tap/quotes.js"></script>
-  <script defer src="tap/script.js"></script>
 </head>
 <body>
-  <div class="hero" id="hero">
-    <img src="assets/logo-white.png" alt="Logo" class="logo" />
+  <div id="hero">
+    <img id="logo" src="assets/logo-white.png" alt="Logo" />
     <div class="quote-box">
-      <div id="quote" class="quote-text">Loading quote...</div>
-      <div id="author" class="quote-author"></div>
+      <p id="quote"></p>
+      <p id="author"></p>
     </div>
-    <div class="scroll-down">↓</div>
+    <div class="fade-bottom"></div>
   </div>
 
-  <div class="fade-separator"></div>
-
-  <div class="tracker-section">
-    <h1>Today's Goal</h1>
-    <div class="streak" id="streakDisplay">🔥 Streak: 0 days</div>
-    <input type="text" id="goalInput" placeholder="Set your goal for today..." />
-    <button id="saveBtn">Set Goal</button>
-    <div id="goalDisplay" class="goal-display">No goal set.</div>
-    <button id="doneBtn" class="done">Mark as Done ✅</button>
+  <div id="goal-tracker">
+    <h2>Daily Goals</h2>
+    <ul>
+      <li><input type="checkbox" /> Morning workout</li>
+      <li><input type="checkbox" /> Eat 3 balanced meals</li>
+      <li><input type="checkbox" /> Drink 2L water</li>
+      <li><input type="checkbox" /> 8+ hours of sleep</li>
+    </ul>
   </div>
+
+  <script src="quotes.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
